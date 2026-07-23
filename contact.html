@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Contact & Join NUBS KNUST" />
+    <title>Contact & Join - NUBS KNUST</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        .border-left-accent {
+            border-left: 4px solid #0d6efd !important;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column h-100 bg-light">
+    <main class="flex-shrink-0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold" href="index.html">NUBS KNUST</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="wings.html">Wings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="contact.html">Contact & Join</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Header -->
+        <header class="py-5 bg-dark text-white text-center position-relative overflow-hidden mb-5">
+            <div class="container px-5 my-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9">
+                        <span class="badge bg-primary px-3 py-2 rounded-pill text-uppercase mb-3 fw-semibold">Connect With Us</span>
+                        <h1 class="display-4 fw-bolder mb-3">Join the Family & Get in Touch</h1>
+                        <p class="lead text-white-50 mb-0">Whether you want to join a ministry wing, request prayer, or connect with our leadership, we'd love to hear from you.</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container px-5 mb-5">
+            <div class="row gx-5">
+                
+                <!-- Left Side: Contact Information Cards -->
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <div class="card border-0 shadow-sm mb-4 border-left-accent">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3 text-primary">Meeting Location</h5>
+                            <p class="text-muted mb-1"><strong>KWAME NKRUMAH UNIVERSITY OF SCIENCE & TECHNOLOGY</strong></p>
+                            <p class="text-muted small mb-0">Kumasi, Ashanti Region, Ghana</p>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm mb-4 border-left-accent">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3 text-primary">Direct Inquiries</h5>
+                            <p class="text-muted mb-1"><strong>General Secretary:</strong></p>
+                            <p class="text-muted small mb-3"><a href="mailto:info@nubsknust.org" class="text-decoration-none">info@nubsknust.org</a></p>
+                            <p class="text-muted mb-1"><strong>Affiliation:</strong></p>
+                            <p class="text-muted small mb-0">Students Chaplaincy Council (SCC-KNUST) & Grace Baptist Church</p>
+                        </div>
+                    </div>
+
+                    <div class="card border-0 shadow-sm border-left-accent">
+                        <div class="card-body p-4">
+                            <h5 class="fw-bold mb-3 text-primary">Hall & Area Cells</h5>
+                            <p class="text-muted small mb-0">Cell meetings are held weekly across various halls of residence and off-campus hostels. Fill out the form to get connected with your hall or area representative.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Contact & Registration Form -->
+                <div class="col-lg-8">
+                    <div class="bg-white rounded-3 p-4 p-md-5 shadow-sm">
+                        <h3 class="fw-bolder mb-3 text-dark">Member Registration & Contact Form</h3>
+                        <p class="text-muted mb-4">Please fill in your details below to register as a member or send us a message.</p>
+
+                        <!-- Replace the 'action' URL below with your Formspree/Web3Forms endpoint -->
+                        <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                            
+                            <!-- Personal Info -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="fullName" class="form-label fw-bold text-muted small">Full Name *</label>
+                                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="e.g. John Doe" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-bold text-muted small">Email Address *</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required />
+                                </div>
+                            </div>
+
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label fw-bold text-muted small">Phone Number / WhatsApp *</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+233 XX XXX xxxx" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="location" class="form-label fw-bold text-muted small">Hall / Off-Campus Hostel *</label>
+                                    <input type="text" class="form-control" id="location" name="location" placeholder="e.g. Unity Hall / Ayeduase" required />
+                                </div>
+                            </div>
+
+                            <!-- Year of Study & Wing Interest -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="academicYear" class="form-label fw-bold text-muted small">Academic Year</label>
+                                    <select class="form-select" id="academicYear" name="academicYear">
+                                        <option value="" selected disabled>Select Year</option>
+                                        <option value="100">Year 100</option>
+                                        <option value="200">Year 200</option>
+                                        <option value="300">Year 300</option>
+                                        <option value="400">Year 400</option>
+                                        <option value="Postgraduate">Postgraduate</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="inquiryType" class="form-label fw-bold text-muted small">Purpose of Submission</label>
+                                    <select class="form-select" id="inquiryType" name="inquiryType">
+                                        <option value="New Member Registration">New Member Registration</option>
+                                        <option value="General Inquiry">General Inquiry</option>
+                                        <option value="Prayer Request">Prayer Request</option>
+                                        <option value="Alumni Connection">Alumni Connection</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Wing Selection -->
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-muted small d-block">Wings You Wish to Join (Select all that apply)</label>
+                                <div class="row g-2">
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Prayer Force" id="wingPrayer">
+                                            <label class="form-check-label small" for="wingPrayer">Prayer Force</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Outreach" id="wingOutreach">
+                                            <label class="form-check-label small" for="wingOutreach">Outreach Wing</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Music (GI)" id="wingMusic">
+                                            <label class="form-check-label small" for="wingMusic">Music Wing (G.I)</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Ministering Marshalls" id="wingMM">
+                                            <label class="form-check-label small" for="wingMM">Ministering Marshalls</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Organizing" id="wingOrganizing">
+                                            <label class="form-check-label small" for="wingOrganizing">Organizing Wing</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-md-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="wings[]" value="Bible Study" id="wingBS">
+                                            <label class="form-check-label small" for="wingBS">Bible Study Wing</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="mb-4">
+                                <label for="message" class="form-label fw-bold text-muted small">Message or Prayer Request</label>
+                                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Write your message here..."></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button class="btn btn-primary btn-lg w-100 fw-bold" type="submit">Submit Form</button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto"><div class="small m-0 text-white">&copy; NUBS KNUST. All Rights Reserved.</div></div>
+                <div class="col-auto">
+                    <a class="link-light small" href="about.html">About</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Wings & Auxiliaries - NUBS KNUST" />
+    <title>Wings & Auxiliaries - NUBS KNUST</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+    <style>
+        .hover-lift {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.125) !important;
+        }
+
+        .border-left-accent {
+            border-left: 4px solid #0d6efd !important;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column h-100 bg-light">
+    <main class="flex-shrink-0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold" href="index.html">NUBS KNUST</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="wings.html">Wings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact & Join</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Header -->
+        <header class="py-5 bg-dark text-white text-center position-relative overflow-hidden mb-5">
+            <div class="container px-5 my-4">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9">
+                        <span class="badge bg-primary px-3 py-2 rounded-pill text-uppercase mb-3 fw-semibold">Ministries
+                            of the Union</span>
+                        <h1 class="display-4 fw-bolder mb-3">Wings & Auxiliaries</h1>
+                        <p class="lead text-white-50 mb-0">Discover the diverse arms of service within NUBS KNUST and
+                            find where your gifts can flourish.</p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="container px-5 mb-5">
+
+            <!-- Section 1: Official Wings -->
+            <section class="mb-5" id="wings-container">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bolder text-dark">Ministry Wings</h2>
+                    <p class="text-muted">Operational wings facilitating core spiritual and administrative functions</p>
+                </div>
+                <div class="row gx-4 gy-4">
+
+                    <!-- Prayer Force -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-prayer-force" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=Prayer+Force" alt="Prayer Force" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-primary mb-2">Intercession</span>
+                                <h5 class="card-title fw-bold">Prayer Force</h5>
+                                <p class="card-text text-muted small">Dedicated to intercession, prayer services, and
+                                    spiritual warfare for the church and campus.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#prayerModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Outreach Wing -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-outreach-wing" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=Outreach+Wing" alt="Outreach Wing" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-success mb-2">Evangelism</span>
+                                <h5 class="card-title fw-bold">Outreach Wing</h5>
+                                <p class="card-text text-muted small">In charge of missions, campus crusades,
+                                    follow-ups, and holistic evangelism training.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#outreachModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- God's Instruments -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-gods-instruments" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=God%27s+Instruments" alt="God's Instruments" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-warning text-dark mb-2">Worship</span>
+                                <h5 class="card-title fw-bold">God's Instruments</h5>
+                                <p class="card-text text-muted small">Uniting voices and instruments to lead the
+                                    fellowship in musical worship and praise.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#musicModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ministering Marshalls -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-ministering-marshalls" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=Ministering+Marshalls"
+                                alt="Ministering Marshalls" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-danger mb-2">Ministrations</span>
+                                <h5 class="card-title fw-bold">Ministering Marshalls</h5>
+                                <p class="card-text text-muted small">Expressing God's Word through drama, choreography,
+                                    spoken word, and creative arts.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#mmModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bible Study Wing -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-bible-study-wing" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=Bible+Study+Wing" alt="Bible Study Wing" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-dark mb-2">Discipleship</span>
+                                <h5 class="card-title fw-bold">Bible Study Wing</h5>
+                                <p class="card-text text-muted small">Preparing manuals, leading Sunday school, and
+                                    conducting inter-wing quiz competitions.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#bsModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Organizing Wing -->
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 border-0 shadow-sm overflow-hidden hover-lift border-left-accent">
+                            <img id="wing-img-organizing-wing" class="card-img-top"
+                                style="height: 220px; object-fit: cover;"
+                                src="https://placehold.co/600x400?text=Organizing+Wing" alt="Organizing Wing" />
+                            <div class="card-body p-4">
+                                <span class="badge bg-info text-dark mb-2">Operations</span>
+                                <h5 class="card-title fw-bold">Organizing Wing</h5>
+                                <p class="card-text text-muted small">Encompassing Ushering, Publicity, Technical,
+                                    Protocol, and Transport departments.</p>
+                            </div>
+                            <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                                <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal"
+                                    data-bs-target="#organizingModal">View Details</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Section 2: Auxiliaries & Subgroups -->
+            <section class="py-5 bg-white rounded-3 shadow-sm px-4 px-md-5">
+                <div class="text-center mb-5">
+                    <h2 class="fw-bolder text-dark">Auxiliaries & Groups</h2>
+                    <p class="text-muted">Targeted fellowship groups for gender, outreach, and external relations</p>
+                </div>
+                <div class="row gx-4 gy-4">
+
+                    <!-- MMV -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm hover-lift text-center p-3">
+                            <div class="card-body">
+                                <div class="badge bg-secondary mb-2">Men's Ministry</div>
+                                <h5 class="fw-bold">Mighty Men of Valour</h5>
+                                <p class="text-muted small">Building men of integrity and sober character through
+                                    prayer, fellowship, and word study.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- LOV -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm hover-lift text-center p-3">
+                            <div class="card-body">
+                                <div class="badge bg-secondary mb-2">Women's Ministry</div>
+                                <h5 class="fw-bold">Ladies of Vision</h5>
+                                <p class="text-muted small">Known as "Jewels in His Crown," focusing on women's
+                                    fellowship, welfare, and spiritual empowerment.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- JNUBS -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm hover-lift text-center p-3">
+                            <div class="card-body">
+                                <div class="badge bg-secondary mb-2">High Schools</div>
+                                <h5 class="fw-bold">JNUBS</h5>
+                                <p class="text-muted small">Coordinating Junior NUBS branches and outreach in
+                                    second-cycle institutions around Kumasi.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- External & Alumni -->
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card h-100 border-0 shadow-sm hover-lift text-center p-3">
+                            <div class="card-body">
+                                <div class="badge bg-secondary mb-2">Network</div>
+                                <h5 class="fw-bold">Alumni & External</h5>
+                                <p class="text-muted small">Liaising between NUBS KNUST, our alumni network, and
+                                    external ministry partners.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Modals for Wing Details -->
+
+    <!-- Prayer Force Modal -->
+    <div class="modal fade" id="prayerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Prayer Force Wing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>The Prayer Force is led by the Prayer Secretary and is responsible for:</p>
+                    <ul>
+                        <li>Organizing Thursday prayer services across designated centers.</li>
+                        <li>Supervising preparatory prayers, core prayers, and weekly dawn Gethsemane meetings.</li>
+                        <li>Leading healing, deliverance, and intercessory teams.</li>
+                        <li>Organizing semester prayer marathons and fasts.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Outreach Modal -->
+    <div class="modal fade" id="outreachModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Outreach Wing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>Headable by the Outreach Secretary, key responsibilities include:</p>
+                    <ul>
+                        <li>Planning and executing campus and community missions and crusades.</li>
+                        <li>Following up with new converts, visitors, and inactive members.</li>
+                        <li>Interpreting innovative methods for personal evangelism and discipleship.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Modal -->
+    <div class="modal fade" id="musicModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Music Wing (God's Instrument)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>Led by the Music President, the wing covers:</p>
+                    <ul>
+                        <li>The Praise and Worship team & NUBS-KNUST Choir (God's Instrument).</li>
+                        <li>Organizing worship retreats and semester music workshops.</li>
+                        <li>Collaborating with Ministering Marshalls every 3 years for <em>Inspiropera</em>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MM Modal -->
+    <div class="modal fade" id="mmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Ministering Marshalls (MM)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>Led by the MM Head, functions include:</p>
+                    <ul>
+                        <li>Coordinating drama, choreography, and spoken word performances.</li>
+                        <li>Expressing the Word of God through creative arts during service and outreaches.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Organizing Modal -->
+    <div class="modal fade" id="organizingModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Organizing Wing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>Subdepartments under the Organizing Secretary include:</p>
+                    <ul>
+                        <li><strong>Ushering:</strong> Seating, offertory, and welcoming guests.</li>
+                        <li><strong>Publicity:</strong> Media, posters, website, and public promotion.</li>
+                        <li><strong>Technical:</strong> Sound systems, instruments, and sermon recordings.</li>
+                        <li><strong>Transport:</strong> Vehicle maintenance and logistics.</li>
+                        <li><strong>Protocol:</strong> Guest minister welfare.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BS Modal -->
+    <div class="modal fade" id="bsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Bible Study Wing</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-muted">
+                    <p>Led by the Bible Studies Coordinator:</p>
+                    <ul>
+                        <li>Prepares study manuals based on the semester's theme.</li>
+                        <li>Organizes Baptismal classes and inter-wing Bible quiz competitions.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">&copy; NUBS KNUST. All Rights Reserved.</div>
+                </div>
+                <div class="col-auto">
+                    <a class="link-light small" href="about.html">About</a>
+                    <span class="text-white mx-1">&middot;</span>
+                    <a class="link-light small" href="contact.html">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
