@@ -15,7 +15,6 @@ const __dirname = path.dirname(__filename);
 import getEventsHandler from './api/get-events.js';
 import getWingsHandler from './api/get-wings.js';
 import imageProxyHandler from './api/image-proxy.js';
-import contactHandler from './api/contact.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -36,7 +35,6 @@ app.get('/', (req, res) => {
 app.get('/api/get-events', (req, res) => getEventsHandler(req, res));
 app.get('/api/get-wings', (req, res) => getWingsHandler(req, res));
 app.get('/api/image-proxy', (req, res) => imageProxyHandler(req, res));
-app.post('/api/contact', (req, res) => contactHandler(req, res));
 
 // Only start a local server listener when NOT on Vercel/Production
 if (process.env.NODE_ENV !== 'production') {
