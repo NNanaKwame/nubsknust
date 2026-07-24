@@ -10956,13 +10956,15 @@ a.event-card:hover {
 
 /* --- Weekly Gatherings (glassmorphism card grid) --------------------------- */
 
-.gatherings-section {
+.gatherings-section,
+.glass-section {
   background: linear-gradient(135deg, #fdf3e7 0%, #f3eefb 55%, #eaf0fb 100%);
   position: relative;
   overflow: hidden;
 }
 
-.gatherings-eyebrow {
+.gatherings-eyebrow,
+.section-eyebrow {
   font-size: 0.8rem;
   font-weight: 500;
   letter-spacing: 0.08em;
@@ -10970,14 +10972,16 @@ a.event-card:hover {
   color: #7a6fb0;
 }
 
-.gatherings-title {
+.gatherings-title,
+.section-heading {
   font-weight: 600;
   font-size: 2.1rem;
   color: #241f35;
   margin: 0.35rem 0 0.5rem;
 }
 
-.gatherings-sub {
+.gatherings-sub,
+.section-subtext {
   color: #6b6579;
   margin-bottom: 0;
 }
@@ -11029,7 +11033,6 @@ a.event-card:hover {
 }
 
 .gathering-badge {
-  font-family: "Inter", sans-serif;
   display: inline-block;
   width: fit-content;
   font-size: 0.72rem;
@@ -11062,6 +11065,21 @@ a.event-card:hover {
   color: #a24b31;
 }
 
+.gathering-badge.badge-slate {
+  background: rgba(71, 85, 105, 0.15);
+  color: #334155;
+}
+
+.gathering-badge.badge-sky {
+  background: rgba(56, 132, 193, 0.15);
+  color: #2563a8;
+}
+
+.gathering-badge.badge-rose {
+  background: rgba(190, 90, 120, 0.15);
+  color: #9c3f5c;
+}
+
 .gathering-title {
   font-weight: 600;
   font-size: 1.15rem;
@@ -11074,4 +11092,362 @@ a.event-card:hover {
   color: #5c566b;
   line-height: 1.55;
   margin-bottom: 0;
+}
+
+/* --- Wings & Auxiliaries (glassmorphism card grid) -------------------------- */
+
+.wing-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(60, 50, 100, 0.1);
+  overflow: hidden;
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.wing-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(60, 50, 100, 0.16);
+}
+
+/* Uniform image frame: every wing photo renders at the same ratio regardless of source size */
+.wing-img-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.wing-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.wing-card:hover .wing-img-wrap img {
+  transform: scale(1.06);
+}
+
+.wing-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.wing-footer {
+  padding: 0 1.5rem 1.5rem;
+  margin-top: auto;
+}
+
+.btn-glass {
+  display: block;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(90, 79, 183, 0.35);
+  color: #4a3f9e;
+  font-weight: 600;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  transition: background 0.25s ease, transform 0.2s ease, color 0.25s ease;
+}
+
+.btn-glass:hover {
+  background: rgba(90, 79, 183, 0.12);
+  color: #3a3080;
+  transform: translateY(-2px);
+}
+
+.aux-card {
+  height: 100%;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(60, 50, 100, 0.1);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.aux-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(60, 50, 100, 0.16);
+}
+
+/* Frosted modal for wing detail popups */
+.glass-modal {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+}
+
+/* --- About page: Aim & Objectives ------------------------------------------ */
+
+.aim-card {
+  height: 100%;
+  padding: 1.75rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(60, 50, 100, 0.1);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+.aim-card:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 40px rgba(60, 50, 100, 0.16);
+}
+
+.aim-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.aim-num.badge-indigo { background: rgba(90, 79, 183, 0.15); color: #4a3f9e; }
+.aim-num.badge-sage { background: rgba(79, 121, 101, 0.15); color: #3a5c4a; }
+.aim-num.badge-gold { background: rgba(201, 154, 62, 0.18); color: #8a6423; }
+.aim-num.badge-clay { background: rgba(196, 109, 79, 0.15); color: #a24b31; }
+
+/* --- About page: Doctrinal Basis -------------------------------------------- */
+
+.text-accent {
+  color: #4a3f9e;
+}
+
+.glass-note {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-left: 4px solid rgba(90, 79, 183, 0.45);
+  border-radius: 14px;
+  padding: 1rem 1.25rem;
+}
+
+.accordion-glass .accordion-item {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.accordion-glass .accordion-button {
+  background: transparent;
+  color: #241f35;
+}
+
+.accordion-glass .accordion-button:not(.collapsed) {
+  background: rgba(90, 79, 183, 0.1);
+  color: #4a3f9e;
+  box-shadow: none;
+}
+
+.accordion-glass .accordion-button:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.accordion-glass .accordion-body {
+  background: transparent;
+}
+
+/* --- About page: Governance & Affiliations ---------------------------------- */
+
+.gov-panel,
+.form-panel {
+  height: 100%;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 22px;
+  box-shadow: 0 8px 30px rgba(60, 50, 100, 0.1);
+}
+
+.gov-chip {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 12px;
+  padding: 0.75rem 0.5rem;
+}
+
+/* --- Contact page: info cards & form --------------------------------------- */
+
+.info-card {
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(26px) saturate(180%);
+  -webkit-backdrop-filter: blur(26px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 28px;
+  box-shadow: 0 12px 34px rgba(60, 50, 100, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.25rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(60, 50, 100, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.info-card:last-child {
+  margin-bottom: 0;
+}
+
+.form-glass .form-control,
+.form-glass .form-select {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+}
+
+.form-glass .form-control::placeholder {
+  color: #9089a3;
+}
+
+.form-glass .form-control:focus,
+.form-glass .form-select:focus {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(90, 79, 183, 0.5);
+  box-shadow: 0 0 0 0.2rem rgba(90, 79, 183, 0.15);
+}
+
+.form-glass .form-check-input:checked {
+  background-color: #4a3f9e;
+  border-color: #4a3f9e;
+}
+
+.form-glass .form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(90, 79, 183, 0.15);
+}
+
+.btn-accent {
+  display: inline-block;
+  background: linear-gradient(135deg, #5a4fb7, #4a3f9e);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 8px 20px rgba(74, 63, 158, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 28px rgba(74, 63, 158, 0.4);
+  color: #fff;
+}
+
+.btn-outline-glass {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1.5px solid rgba(36, 31, 53, 0.3);
+  color: #241f35;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.7rem 1.4rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-outline-glass:hover {
+  background: rgba(255, 255, 255, 0.85);
+  transform: translateY(-2px);
+  color: #241f35;
+}
+
+/* --- Contact page: sidebar icon circles, quick-contact links, socials ------- */
+
+.contact-icon-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 1.35rem;
+}
+
+.contact-icon-circle.badge-indigo { background: rgba(90, 79, 183, 0.15); color: #4a3f9e; }
+.contact-icon-circle.badge-sage { background: rgba(79, 121, 101, 0.15); color: #3a5c4a; }
+.contact-icon-circle.badge-gold { background: rgba(201, 154, 62, 0.18); color: #8a6423; }
+
+.quick-contact-link {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  color: #3f3a52;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 0.6rem;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.quick-contact-link:last-child {
+  margin-bottom: 0;
+}
+
+.quick-contact-link i {
+  font-size: 1.05rem;
+  color: #4a3f9e;
+}
+
+.quick-contact-link:hover {
+  background: rgba(90, 79, 183, 0.12);
+  transform: translateX(3px);
+  color: #4a3f9e;
+}
+
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #4a3f9e;
+  font-size: 1.1rem;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.social-icon-btn:hover {
+  transform: translateY(-3px);
+  background: rgba(90, 79, 183, 0.15);
+  box-shadow: 0 8px 20px rgba(90, 79, 183, 0.25);
+  color: #3a3080;
 }
