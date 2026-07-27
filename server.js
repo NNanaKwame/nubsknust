@@ -8,6 +8,7 @@ dotenv.config();
 import getEventsHandler from './api/get-events.js';
 import getWingsHandler from './api/get-wings.js';
 import imageProxyHandler from './api/image-proxy.js';
+import getGalleryMediaHandler from './api/get-gallery-media.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,6 +23,7 @@ app.use(express.static(process.cwd()));
 app.get('/api/get-events', (req, res) => getEventsHandler(req, res));
 app.get('/api/get-wings', (req, res) => getWingsHandler(req, res));
 app.get('/api/image-proxy', (req, res) => imageProxyHandler(req, res));
+app.get('/api/get-gallery-media', (req, res) => getGalleryMediaHandler(req, res));
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
