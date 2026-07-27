@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Ministry Wing details - NUBS KNUST" />
+    <title>Wing Details - NUBS KNUST</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Bootstrap Icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <main class="flex-shrink-0">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <div class="container px-5">
+                <a class="navbar-brand fw-bold" href="index.html">NUBS KNUST</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="wings.html">Wings</a></li>
+                        <li class="nav-item"><a class="nav-link" href="events.html">Events</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact & Join</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container px-5 my-5">
+            <a href="wings.html" class="wing-back-link"><i class="bi bi-arrow-left"></i> Back to Wings</a>
+
+            <div id="wing-detail-content">
+                <div style="text-align: center; padding: 4rem 0;">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading wing details...</span>
+                    </div>
+                    <p class="text-muted mt-2">Loading wing details...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark py-4 mt-auto">
+        <div class="container px-5">
+            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                <div class="col-auto">
+                    <div class="small m-0 text-white">Copyright &copy; NUBS KNUST 2026</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lightbox (shared by photo & video galleries) -->
+    <div class="lightbox-overlay" id="lightbox">
+        <div class="lightbox-content" id="lightboxContent">
+            <button class="lightbox-btn lightbox-close" id="lightboxClose" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+            <button class="lightbox-btn lightbox-prev" id="lightboxPrev" aria-label="Previous"><i class="bi bi-chevron-left"></i></button>
+            <button class="lightbox-btn lightbox-next" id="lightboxNext" aria-label="Next"><i class="bi bi-chevron-right"></i></button>
+            <div id="lightboxMedia"></div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+
+    <script>
+        let currentGallery = [];
+        let currentIndex = 0;
+        let currentType = "photo"; // "photo" | "video"
+
+        function badgeLabel(category) {
+            return category;
+        }
+
+        function renderWing(wing) {
+            const container = document.getElementById("wing-detail-content");
+
+            const photosHtml = wing.photos && wing.photos.length
+                ? wing.photos.map((p, i) => `
+                    <div class="gallery-thumb" onclick="openLightbox('photo', ${i})">
+                        <img src="${p.src}" alt="${p.alt || wing.name}" loading="lazy" width="600" height="750" />
+                    </div>
+                `).join("")
+                : `<div class="gallery-empty">No photos yet &mdash; check back soon.</div>`;
+
+            const platformIcon = {
+                youtube: "bi-youtube",
+                tiktok: "bi-tiktok",
+                instagram: "bi-instagram",
+                upload: "bi-camera-video-fill"
+            };
+
+            const videosHtml = wing.videos && wing.videos.length
+                ? wing.videos.map((v, i) => `
+                    <div class="video-thumb" onclick="openLightbox('video', ${i})">
+                        <div class="video-thumb-platform"><i class="bi ${platformIcon[v.type] || 'bi-play-circle-fill'}"></i></div>
+                        <img src="${v.thumbnail || 'https://placehold.co/480x270?text=' + encodeURIComponent(v.title || 'Video')}" alt="${v.title || wing.name}" loading="lazy" width="480" height="270" />
+                        <div class="video-thumb-play"><span><i class="bi bi-play-fill"></i></span></div>
+                    </div>
+                `).join("")
+                : `<div class="gallery-empty">Videos coming soon.</div>`;
+
+            container.innerHTML = `
+                <div class="glass-section wing-detail-hero rounded-4">
+                    <span class="gathering-badge ${wing.badge}">${badgeLabel(wing.category)}</span>
+                    <h1 class="section-heading mb-0">${wing.name}</h1>
+                    <p class="wing-detail-tagline">${wing.tagline || ""}</p>
+                </div>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <div class="meeting-chip">
+                            <div class="meeting-chip-icon"><i class="bi bi-calendar-event-fill"></i></div>
+                            <div>
+                                <div class="meeting-chip-label">Meeting Day</div>
+                                <div class="meeting-chip-value">${wing.meetingDay || "TBD"}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="meeting-chip">
+                            <div class="meeting-chip-icon"><i class="bi bi-clock-fill"></i></div>
+                            <div>
+                                <div class="meeting-chip-label">Time</div>
+                                <div class="meeting-chip-value">${wing.meetingTime || "TBD"}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="meeting-chip">
+                            <div class="meeting-chip-icon"><i class="bi bi-geo-alt-fill"></i></div>
+                            <div>
+                                <div class="meeting-chip-label">Venue</div>
+                                <div class="meeting-chip-value">${wing.venue || "TBD"}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card mb-4">
+                    <h5 class="fw-bold mb-2 text-accent">About This Wing</h5>
+                    <p class="text-muted mb-0">${wing.description || ""}</p>
+                </div>
+
+                <div class="mb-5">
+                    <h3 class="gallery-section-title">Photo Gallery</h3>
+                    <div class="gallery-grid">${photosHtml}</div>
+                </div>
+
+                <div class="mb-3">
+                    <h3 class="gallery-section-title">Video Gallery</h3>
+                    <div class="video-grid">${videosHtml}</div>
+                </div>
+            `;
+
+            loadedWing = wing;
+        }
+
+        async function fetchWingDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const wingId = urlParams.get("id");
+            const container = document.getElementById("wing-detail-content");
+
+            if (!wingId) {
+                container.innerHTML = "<p>Wing not found.</p>";
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/get-wing-details?id=${encodeURIComponent(wingId)}`);
+                if (!response.ok) {
+                    container.innerHTML = "<p>Wing details not available.</p>";
+                    return;
+                }
+                const data = await response.json();
+                const wing = data.item;
+
+                if (!wing) {
+                    container.innerHTML = "<p>Wing details not available.</p>";
+                    return;
+                }
+
+                document.title = wing.name + " - NUBS KNUST";
+                renderWing(wing);
+            } catch (err) {
+                console.error("Error loading wing details:", err);
+                container.innerHTML = "<p>Failed to load wing details.</p>";
+            }
+        }
+
+        // --- Lightbox ---
+        let loadedWing = null;
+
+        function openLightbox(type, index) {
+            currentType = type;
+            currentIndex = index;
+            currentGallery = type === "photo" ? (loadedWing.photos || []) : (loadedWing.videos || []);
+            showLightboxItem();
+            document.getElementById("lightbox").classList.add("active");
+        }
+
+        function showLightboxItem() {
+            const media = document.getElementById("lightboxMedia");
+            const caption = document.getElementById("lightboxCaption");
+            const content = document.getElementById("lightboxContent");
+            const item = currentGallery[currentIndex];
+
+            content.classList.remove("is-vertical");
+
+            if (currentType === "photo") {
+                media.innerHTML = `<img src="${item.src}" alt="${item.alt || ''}" />`;
+                caption.textContent = item.alt || "";
+            } else {
+                media.innerHTML = getVideoEmbedHtml(item);
+                caption.textContent = item.title || "";
+
+                const isVertical = item.vertical !== undefined
+                    ? item.vertical
+                    : (item.type === "tiktok" || item.type === "instagram");
+                if (isVertical) content.classList.add("is-vertical");
+            }
+
+            const multi = currentGallery.length > 1;
+            document.getElementById("lightboxPrev").style.display = multi ? "flex" : "none";
+            document.getElementById("lightboxNext").style.display = multi ? "flex" : "none";
+        }
+
+        function getVideoEmbedHtml(item) {
+            const commonAllow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+
+            switch (item.type) {
+                case "youtube":
+                    if (!item.videoId) return `<div class="gallery-empty" style="min-width:300px;">Video coming soon.</div>`;
+                    return `<iframe src="https://www.youtube.com/embed/${item.videoId}" title="${item.title || ''}" allow="${commonAllow}" allowfullscreen></iframe>`;
+
+                case "tiktok":
+                    if (!item.videoId) return `<div class="gallery-empty" style="min-width:300px;">Video coming soon.</div>`;
+                    return `<iframe src="https://www.tiktok.com/embed/v2/${item.videoId}" title="${item.title || ''}" allow="${commonAllow}" allowfullscreen></iframe>`;
+
+                case "instagram":
+                    if (!item.videoId) return `<div class="gallery-empty" style="min-width:300px;">Video coming soon.</div>`;
+                    return `<iframe src="https://www.instagram.com/reel/${item.videoId}/embed" title="${item.title || ''}" allow="${commonAllow}" allowfullscreen></iframe>`;
+
+                case "upload":
+                    if (!item.src) return `<div class="gallery-empty" style="min-width:300px;">Video coming soon.</div>`;
+                    return `<video controls playsinline src="${item.src}"></video>`;
+
+                default:
+                    return `<div class="gallery-empty" style="min-width:300px;">Video coming soon.</div>`;
+            }
+        }
+
+        function closeLightbox() {
+            document.getElementById("lightbox").classList.remove("active");
+            document.getElementById("lightboxMedia").innerHTML = "";
+        }
+
+        document.getElementById("lightboxClose").addEventListener("click", closeLightbox);
+        document.getElementById("lightbox").addEventListener("click", function (e) {
+            if (e.target === this) closeLightbox();
+        });
+        document.getElementById("lightboxPrev").addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+            showLightboxItem();
+        });
+        document.getElementById("lightboxNext").addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % currentGallery.length;
+            showLightboxItem();
+        });
+        document.addEventListener("keydown", function (e) {
+            if (!document.getElementById("lightbox").classList.contains("active")) return;
+            if (e.key === "Escape") closeLightbox();
+            if (e.key === "ArrowLeft") document.getElementById("lightboxPrev").click();
+            if (e.key === "ArrowRight") document.getElementById("lightboxNext").click();
+        });
+
+        document.addEventListener("DOMContentLoaded", fetchWingDetails);
+    </script>
+</body>
+
+</html>
