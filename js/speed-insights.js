@@ -1,5 +1,13 @@
-// Vercel Speed Insights initialization using the official @vercel/speed-insights package
-import { injectSpeedInsights } from '../node_modules/@vercel/speed-insights/dist/index.mjs';
+// Vercel Speed Insights initialization (vanilla/static usage)
+(function () {
+  window.si =
+    window.si ||
+    function () {
+      (window.siq = window.siq || []).push(arguments);
+    };
 
-// Initialize Speed Insights
-injectSpeedInsights();
+  const script = document.createElement('script');
+  script.defer = true;
+  script.src = 'https://speed-insights.vercel.app/script.js';
+  document.head.appendChild(script);
+})();
