@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -10,7 +11,7 @@
   <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
   <!-- Bootstrap Icons-->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <!-- Core theme CSS (includes Bootstrap)-->
+  <!-- Core theme CSS (includes Bootstrap & Custom Glass Styles)-->
   <link href="/css/styles.css" rel="stylesheet" />
   <!-- Vercel Web Analytics -->
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
@@ -20,44 +21,56 @@
 
 <body class="d-flex flex-column h-100">
   <main class="flex-shrink-0">
-    
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container px-5">
         <a class="navbar-brand fw-bold" href="/index.html">NUBS KNUST</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link active" href="/events.html">Events</a></li>
+            <li class="nav-item"><a class="nav-link" href="/wings.html">Wings</a></li>
+            <li class="nav-item"><a class="nav-link" href="/gallery.html">Gallery</a></li>
+            <li class="nav-item"><a class="nav-link" href="/contact.html">Contact</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <!-- Page Header -->
-    <header class="py-5 bg-light border-bottom">
-      <div class="container px-5 my-4">
-        <div class="text-center">
-          <h1 class="fw-bolder display-5 mb-2">Events & Programs</h1>
-          <p class="lead fw-normal text-muted mb-0">Stay updated with all upcoming fellowship gatherings, services, and special events</p>
-        </div>
+    <div class="container px-5 mt-5 mb-3">
+      <div class="glass-section gallery-page-hero rounded-4 p-5">
+        <span class="section-eyebrow">Gather & Grow</span>
+        <h1 class="section-heading mb-0">Upcoming Gatherings</h1>
+        <p class="section-subtext">Step into fellowship, worship, and transformative moments designed to anchor your
+          faith on campus.</p>
       </div>
-    </header>
+    </div>
 
     <!-- Main Events Grid Section -->
     <section class="py-5">
       <div class="container px-5 my-3">
-        
-        <!-- Updated to use 'events-grid' class for custom card styles -->
-        <div id="full-events-container" class="events-grid">
-          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 0;">
-            <div class="spinner-border text-primary" role="status">
-              <span class="visually-hidden">Loading events...</span>
-            </div>
-            <p class="text-muted mt-2">Fetching upcoming programs...</p>
+
+        <!-- Interactive Filter Chips (Matching gallery.html styling) -->
+        <div class="filter-chip-group" id="event-filters">
+          <button class="filter-chip active" data-filter="all">All Events</button>
+          <button class="filter-chip" data-filter="today">Today</button>
+          <button class="filter-chip" data-filter="tomorrow">Tomorrow</button>
+          <button class="filter-chip" data-filter="upcoming">Upcoming</button>
+          <button class="filter-chip" data-filter="past">Past</button>
+        </div>
+
+        <!-- Main Container for Cards -->
+        <div id="full-events-container" class="events-grid"></div>
+
+        <!-- Infinite Scroll Trigger Element -->
+        <div id="events-observer-target" style="text-align: center; padding: 2rem 0; display: none;">
+          <div class="spinner-border text-primary" role="status" style="width: 2rem; height: 2rem;">
+            <span class="visually-hidden">Loading...</span>
           </div>
         </div>
 
@@ -79,7 +92,9 @@
 
   <!-- Bootstrap core JS-->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Core theme JS-->
+  <!-- Core theme JS -->
+  <script src="/js/date-utils.js"></script>
   <script src="/js/scripts.js"></script>
 </body>
+
 </html>

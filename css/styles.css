@@ -10924,6 +10924,45 @@ a.event-card:hover {
 .event-info {
   flex: 1 !important;
   min-width: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+/* Event Status Tags */
+.event-status-badge {
+  display: inline-block !important;
+  padding: 3px 8px !important;
+  font-size: 0.65rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  border-radius: 6px !important;
+  margin-bottom: 0.5rem !important;
+  letter-spacing: 0.05em !important;
+}
+
+.tag-today {
+  background-color: #dbeafe !important;
+  color: #1d4ed8 !important;
+  border: 1px solid #93c5fd !important;
+}
+
+.tag-tomorrow {
+  background-color: #fef3c7 !important;
+  color: #b45309 !important;
+  border: 1px solid #fcd34d !important;
+}
+
+.tag-upcoming {
+  background-color: #dcfce7 !important;
+  color: #166534 !important;
+  border: 1px solid #86efac !important;
+}
+
+.tag-past {
+  background-color: #f3f4f6 !important;
+  color: #6b7280 !important;
+  border: 1px solid #d1d5db !important;
 }
 
 .event-location {
