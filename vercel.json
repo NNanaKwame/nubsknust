@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/whatsapp",
+      "destination": "https://whatsapp.com/channel/0029VbBqpJO72WU2LsP7qy2x",
+      "permanent": false
+    },
+    {
+      "source": "/community",
+      "destination": "https://chat.whatsapp.com/LcpbOHHRed66uvmdLKm0SI",
+      "permanent": false
+    },
+    {
+      "source": "/prayer",
+      "destination": "https://wa.me/233531424648?text=Hello%2C%20I%20would%20like%20to%20submit%20a%20prayer%20request.",
+      "permanent": false
+    },
+    {
+      "source": "/live",
+      "destination": "https://www.youtube.com/@nubsknust",
+      "permanent": false
+    }
+  ]
+}
