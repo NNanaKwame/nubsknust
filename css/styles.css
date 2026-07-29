@@ -3278,21 +3278,36 @@ textarea.form-control {
 
 /* --- Base ---------------------------------------------------------------- */
 
-body,
 html {
   height: 100%;
 }
 
 body {
-  background: linear-gradient(135deg, #fdf3e7 0%, #f3eefb 55%, #eaf0fb 100%);
-  background-attachment: fixed;
-  background-size: cover;
+  min-height: 100%;
+  margin: 0;
+  font-family: var(--bs-body-font-family);
+  font-size: var(--bs-body-font-size);
+  font-weight: var(--bs-body-font-weight);
+  line-height: var(--bs-body-line-height);
+  color: var(--bs-body-color);
+  text-align: var(--bs-body-text-align);
+  background-color: var(--bs-body-bg);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  position: relative;
 }
 
-@media (max-width: 768px) {
-  body {
-    background-attachment: scroll; /* fixed backgrounds are unreliable on iOS Safari */
-  }
+/* Fixes mobile background gradient blending across sections */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #fdf3e7 0%, #f3eefb 55%, #eaf0fb 100%);
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* --- Feature icons & blog banners ----------------------------------------- */
