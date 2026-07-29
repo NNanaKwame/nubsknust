@@ -35,7 +35,8 @@ function toPhotoItem(file) {
     id: file.id,
     mediaType: "photo",
     name: file.name,
-    src: `/api/image-proxy?id=${file.id}`,
+    thumb: `/api/image-proxy?id=${file.id}&w=400`,  // grid tile
+    src: `/api/image-proxy?id=${file.id}&w=1600`,   // lightbox full view, capped not raw
     alt: file.name,
     createdTime: file.createdTime,
   };
@@ -48,7 +49,7 @@ function toVideoItem(file) {
     name: file.name,
     type: "drive",
     embedUrl: `https://drive.google.com/file/d/${file.id}/preview`,
-    thumbnail: `/api/image-proxy?id=${file.id}`,
+    thumbnail: `/api/image-proxy?id=${file.id}&w=400`,
     title: file.name,
     vertical: !!(file.videoMediaMetadata && file.videoMediaMetadata.height > file.videoMediaMetadata.width),
     createdTime: file.createdTime,
