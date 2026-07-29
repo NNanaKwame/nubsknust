@@ -148,7 +148,7 @@ export default async function handler(req, res) {
           Return ONLY strict JSON format matching this exact schema:
           {
             "title": "Name or headline of the event",
-            "date": "Event date strictly in YYYY-MM-DD format (infer year if needed, return null if unknown)",
+            "date": "Event date strictly in YYYY-MM-DD format (Infer the year if the day and month are visible, Return null only of no event date is visble anywhere)",
             "location": "Venue or hall name mentioned",
             "description": "Brief 1-2 sentence summary from the flyer"
           }
