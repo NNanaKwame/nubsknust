@@ -9,6 +9,7 @@ import getEventsHandler from './api/get-events.js';
 import getWingsHandler from './api/get-wings.js';
 import imageProxyHandler from './api/image-proxy.js';
 import getGalleryMediaHandler from './api/get-gallery-media.js';
+import getBooksHandler from './api/get-books.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +25,7 @@ app.get('/api/get-events', (req, res) => getEventsHandler(req, res));
 app.get('/api/get-wings', (req, res) => getWingsHandler(req, res));
 app.get('/api/image-proxy', (req, res) => imageProxyHandler(req, res));
 app.get('/api/get-gallery-media', (req, res) => getGalleryMediaHandler(req, res));
+app.get('/api/get-books', (req, res) => getBooksHandler(req, res));
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
