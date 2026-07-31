@@ -1,24 +1,8 @@
 {
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [
-        {
-          "type": "host",
-          "value": "library.nubsknust.org"
-        }
-      ],
-      "destination": "/library.html"
-    },
-    {
-      "source": "/",
-      "destination": "/index.html"
-    }
-  ],
   "redirects": [
     {
       "source": "/whatsapp",
-      "destination": "https://whatsapp.com/channel/0029VbBqpJO72LsP7qy2x",
+      "destination": "https://whatsapp.com/channel/0029VbqpJO72WU2LsP7qy2x",
       "permanent": false
     },
     {
