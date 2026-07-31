@@ -9,6 +9,10 @@
         }
       ],
       "destination": "/library.html"
+    },
+    {
+      "source": "/",
+      "destination": "/index.html"
     }
   ],
   "redirects": [
