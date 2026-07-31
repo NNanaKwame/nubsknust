@@ -16,8 +16,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files from public folder first (so /books.json works locally)
-app.use(express.static(path.join(process.cwd(), 'public')));
+
 // Fallback static middleware for root-level files (HTML, CSS, JS)
 app.use(express.static(process.cwd()));
 
