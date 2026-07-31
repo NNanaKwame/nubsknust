@@ -9,7 +9,6 @@ import getEventsHandler from './api/get-events.js';
 import getWingsHandler from './api/get-wings.js';
 import imageProxyHandler from './api/image-proxy.js';
 import getGalleryMediaHandler from './api/get-gallery-media.js';
-import getBooksHandler from './api/get-books.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,7 +16,9 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files locally
+// Serve static files from public folder first (so /books.json works locally)
+app.use(express.static(path.join(process.cwd(), 'public')));
+// Fallback static middleware for root-level files (HTML, CSS, JS)
 app.use(express.static(process.cwd()));
 
 // API Endpoints
@@ -25,7 +26,6 @@ app.get('/api/get-events', (req, res) => getEventsHandler(req, res));
 app.get('/api/get-wings', (req, res) => getWingsHandler(req, res));
 app.get('/api/image-proxy', (req, res) => imageProxyHandler(req, res));
 app.get('/api/get-gallery-media', (req, res) => getGalleryMediaHandler(req, res));
-app.get('/api/get-books', (req, res) => getBooksHandler(req, res));
 
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {

@@ -1,26 +1,18 @@
 // api/get-books.js
 //
-// Lists PDF books from a public Google Drive folder, extracts metadata
-// (title, author, category, description) via Gemini, and returns them for
-// the library page. Mirrors the pattern already used in get-events.js:
-// same SDK (@google/generative-ai), same model fallback rotation, same
-// in-memory response caching keyed by a content hash.
+// Walks a root Google Drive library folder whose immediate subfolders are
+// topic categories (e.g. "Devotional", "Doctrine"), and lists PDFs inside
+// each. The category comes from the folder name (mapped to one of 4 umbrella
+// chips below) rather than asking Gemini to guess it — more reliable, since
+// you've already organized the books yourself.
 //
-// To keep Gemini requests small and cheap, only the first few pages of
-// each PDF are sent for analysis (via pdf-lib, a pure-JS library with no
-// native dependencies — safe on Vercel's serverless runtime, unlike
-// packages like `canvas` which require native compilation).
+// Gemini is only used to extract title/author/description from each PDF's
+// intro pages (via pdf-lib, pure JS, no native deps — safe on Vercel).
 //
 // Setup required:
-//   - DRIVE_BOOKS_FOLDER_ID env var (a public Drive folder containing PDFs)
+//   - DRIVE_BOOKS_FOLDER_ID env var: the ROOT library folder ID (the one
+//     containing your category subfolders, not a category folder itself)
 //   - GOOGLE_API_KEY and GEMINI_API_KEY (already used by get-events.js)
-//
-// Cover images: this deliberately does NOT attempt to render a PDF page as
-// an image server-side. The frontend renders a clean CSS placeholder cover
-// instead (gradient + icon + title, colored by category). Simpler, zero
-// extra dependencies, and consistent with the site's existing badge-color
-// system. Real cover art can be added later as a v2 (e.g. a matching image
-// file per PDF) without changing this contract.
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { PDFDocument } from "pdf-lib";
@@ -30,77 +22,110 @@ dotenv.config();
 
 const cache = {};
 const INTRO_PAGES = 5; // only send the first N pages to Gemini, keeps requests small & cheap
+const FOLDER_MIME = "application/vnd.google-apps.folder";
 
 const MODEL_CANDIDATES = [
-  "gemini-3.6-flash",
-  "gemini-3.5-flash",
   "gemini-2.5-flash",
+  "gemini-1.5-flash",
   "gemini-3.5-flash-lite",
   "gemini-3.1-flash-lite",
-  "gemini-2.5-flash-lite",
 ];
 
-const VALID_BADGES = ["badge-indigo", "badge-sage", "badge-gold", "badge-clay", "badge-slate", "badge-sky"];
+// Maps your actual Drive subfolder names (lowercase) to one of 4 umbrella
+// chip categories. Add new folder names here as your library grows —
+// anything not listed falls back to "discipleship" (see FALLBACK_CATEGORY).
+const FOLDER_CATEGORY_MAP = {
+  "devotional": "devotional",
+  "prayer": "devotional",
+  "the holy spirit": "devotional",
+  "purpose": "devotional",
+
+  "doctrine": "doctrine",
+  "faith": "doctrine",
+
+  "leadership": "leadership",
+  "finance": "leadership",
+
+  "discipleship": "discipleship",
+  "relationship": "discipleship",
+  "lifestyle": "discipleship",
+  "honour and loyalty": "discipleship",
+  "honour loyalty": "discipleship",
+};
+
+const FALLBACK_CATEGORY = "discipleship";
+
+const CATEGORY_META = {
+  devotional: { categoryName: "Devotional", badgeClass: "badge-indigo" },
+  doctrine: { categoryName: "Doctrine", badgeClass: "badge-gold" },
+  leadership: { categoryName: "Leadership", badgeClass: "badge-sky" },
+  discipleship: { categoryName: "Discipleship", badgeClass: "badge-sage" },
+};
+
+function mapFolderToCategory(folderName) {
+  const key = folderName.trim().toLowerCase();
+  if (FOLDER_CATEGORY_MAP[key]) return FOLDER_CATEGORY_MAP[key];
+  console.warn(`[get-books] Unrecognized folder "${folderName}" — falling back to "${FALLBACK_CATEGORY}"`);
+  return FALLBACK_CATEGORY;
+}
+
+async function listDriveChildren(folderId, apiKey, extraFields = "") {
+  const query = encodeURIComponent(`'${folderId}' in parents and trashed = false`);
+  const fields = encodeURIComponent(`files(id,name,mimeType${extraFields})`);
+  const url = `https://www.googleapis.com/drive/v3/files?q=${query}&fields=${fields}&pageSize=1000&key=${apiKey}`;
+
+  const resp = await fetch(url);
+  const data = await resp.json();
+  if (data.error) throw new Error(data.error.message);
+  return data.files || [];
+}
 
 export default async function handler(req, res) {
   const GEMINI_API_KEY = (process.env.GEMINI_API_KEY || "").trim();
   const GOOGLE_API_KEY = (process.env.GOOGLE_API_KEY || "").trim();
-  const folderId = (process.env.DRIVE_BOOKS_FOLDER_ID || "").trim();
+  const rootFolderId = (process.env.DRIVE_BOOKS_FOLDER_ID || "").trim();
 
-  const limit = req.query.limit ? parseInt(req.query.limit, 10) : 12;
-  const pageToken = req.query.pageToken || "";
-
-  if (!GOOGLE_API_KEY || !GEMINI_API_KEY || !folderId) {
+  if (!GOOGLE_API_KEY || !GEMINI_API_KEY || !rootFolderId) {
     return res.status(500).json({ error: "Missing configuration in environment variables" });
   }
 
   try {
-    const qParam = encodeURIComponent(
-      `'${folderId}' in parents and trashed = false and mimeType = 'application/pdf'`
+    // 1. List category subfolders under the root
+    const subfolders = (await listDriveChildren(rootFolderId, GOOGLE_API_KEY))
+      .filter((f) => f.mimeType === FOLDER_MIME);
+
+    // 2. List PDFs inside each category subfolder, tagged with its mapped category
+    const fileGroups = await Promise.all(
+      subfolders.map(async (folder) => {
+        const category = mapFolderToCategory(folder.name);
+        const files = (await listDriveChildren(folder.id, GOOGLE_API_KEY, ",modifiedTime,createdTime"))
+          .filter((f) => f.mimeType === "application/pdf");
+        return files.map((f) => ({ ...f, category }));
+      })
     );
-    let metadataUrl =
-      `https://www.googleapis.com/drive/v3/files?q=${qParam}&orderBy=createdTime%20desc` +
-      `&pageSize=${limit}&fields=nextPageToken,files(id,name,modifiedTime,createdTime)&key=${GOOGLE_API_KEY}`;
+    const allFiles = fileGroups.flat();
 
-    if (pageToken) metadataUrl += `&pageToken=${pageToken}`;
-
-    const driveResp = await fetch(metadataUrl);
-    const driveData = await driveResp.json();
-
-    if (driveData.error) {
-      console.error("[DRIVE API ERROR]:", driveData.error);
-      return res.status(500).json({ error: driveData.error.message });
+    if (allFiles.length === 0) {
+      return res.status(200).json({ items: [] });
     }
 
-    const files = driveData.files || [];
-    const nextPageToken = driveData.nextPageToken || null;
+    const currentHash = allFiles.map((f) => `${f.id}_${f.modifiedTime}`).join("|");
+    const cacheKey = "books_all";
 
-    if (files.length === 0) {
-      return res.status(200).json({ items: [], nextPageToken: null });
-    }
-
-    const currentHash = files.map((f) => `${f.id}_${f.modifiedTime}`).join("|");
-    const cacheKey = `books_${pageToken || "first_page"}_${limit}`;
-
-    if (!cache[cacheKey]) cache[cacheKey] = { hash: null, data: null, nextPageToken: null };
+    if (!cache[cacheKey]) cache[cacheKey] = { hash: null, data: null };
 
     if (cache[cacheKey].hash === currentHash && cache[cacheKey].data) {
-      console.log(`[CACHE HIT] Serving ${cacheKey} instantly from memory.`);
-      return res.status(200).json({
-        items: cache[cacheKey].data,
-        nextPageToken: cache[cacheKey].nextPageToken,
-      });
+      console.log("[CACHE HIT] Serving library instantly from memory.");
+      return res.status(200).json({ items: cache[cacheKey].data });
     }
 
-    console.log(`[CACHE MISS] Processing ${files.length} books for ${cacheKey}...`);
+    console.log(`[CACHE MISS] Processing ${allFiles.length} books across ${subfolders.length} categories...`);
 
     const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
+    const results = [];
 
-    const parsedPromises = files.map(async (file) => {
+    for (const file of allFiles) {
       try {
-        // Download the full PDF, then trim to just the intro pages before
-        // sending to Gemini — keeps the request small regardless of the
-        // book's actual length.
         const pdfUrl = `https://www.googleapis.com/drive/v3/files/${file.id}?alt=media&key=${GOOGLE_API_KEY}`;
         const pdfResp = await fetch(pdfUrl);
         if (!pdfResp.ok) throw new Error(`PDF fetch failed (${pdfResp.status})`);
@@ -121,9 +146,6 @@ export default async function handler(req, res) {
           Extract details in strict JSON format:
           - title: The exact book title.
           - author: The author's name.
-          - category: choose exactly one of: devotional, doctrine, leadership, outreach.
-          - categoryName: A human-readable label for that category (e.g. "Devotional").
-          - badgeClass: choose exactly one of: badge-indigo, badge-sage, badge-gold, badge-clay, badge-slate, badge-sky.
           - description: A concise 1-2 sentence summary of what the book is about.
         `;
 
@@ -151,34 +173,38 @@ export default async function handler(req, res) {
 
         if (!success || !aiResult) {
           console.error(`[FILE ERROR] All fallback models failed for ${file.name}`);
-          return null;
+          continue;
         }
 
         const parsed = JSON.parse(aiResult.response.text());
+        const meta = CATEGORY_META[file.category];
 
-        return {
+        results.push({
           id: file.id,
           title: parsed.title || file.name.replace(/\.pdf$/i, ""),
           author: parsed.author || "Unknown",
-          category: parsed.category || "devotional",
-          categoryName: parsed.categoryName || "Devotional",
-          badgeClass: VALID_BADGES.includes(parsed.badgeClass) ? parsed.badgeClass : "badge-indigo",
+          category: file.category,
+          categoryName: meta.categoryName,
+          badgeClass: meta.badgeClass,
           description: parsed.description || "",
           driveUrl: `https://drive.google.com/file/d/${file.id}/view`,
           createdTime: file.createdTime,
-        };
+        });
+
       } catch (err) {
         console.error(`[FILE ERROR] Failed processing ${file.name}:`, err.message);
-        return null;
       }
-    });
 
-    const results = await Promise.all(parsedPromises);
+      // 3-second delay between requests to strictly respect the ~20 RPM limit
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+    }
+
     const items = results.filter((item) => item !== null);
+    items.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
 
-    cache[cacheKey] = { hash: currentHash, data: items, nextPageToken };
+    cache[cacheKey] = { hash: currentHash, data: items };
 
-    return res.status(200).json({ items, nextPageToken });
+    return res.status(200).json({ items });
   } catch (error) {
     console.error("[TOP HANDLER ERROR]:", error);
     return res.status(500).json({ error: "Failed to load library", details: error.message });

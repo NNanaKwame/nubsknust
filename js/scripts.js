@@ -13,6 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const wingContainer = document.getElementById('wings-container');
   const filterGroup = document.getElementById('event-filters');
 
+  const homeBooksContainer = document.getElementById('home-books-container');
+  if (homeBooksContainer) {
+    fetchRandomHomeBooks(homeBooksContainer, 3);
+  }
+
   // Home Page: fetch and display optimized selection (top 3)
   if (homeEventsContainer) {
     fetchEvents(homeEventsContainer, 6);
@@ -284,5 +289,51 @@ async function loadWingImages() {
 
   } catch (err) {
     console.error('[WINGS ERROR] Failed loading wing images:', err);
+  }
+}
+
+/**
+ * Helper to generate book cover HTML
+ */
+function createBookCardHTML(book) {
+  return `
+    <a href="${book.driveUrl}" target="_blank" rel="noopener noreferrer" class="book-card">
+      <div class="book-cover ${book.badgeClass}">
+        <i class="bi bi-book-fill"></i>
+        <span class="book-cover-title">${book.title}</span>
+      </div>
+      <div class="book-card-body">
+        <span class="gathering-badge ${book.badgeClass}">${book.categoryName}</span>
+        <p class="book-card-author">${book.author}</p>
+        <p class="book-card-desc">${book.description || ''}</p>
+      </div>
+    </a>
+  `;
+}
+
+/**
+ * Fetch books from static JSON and render random selection on homepage
+ */
+async function fetchRandomHomeBooks(container, count = 3) {
+  try {
+    const response = await fetch('/books.json');
+    if (!response.ok) throw new Error('Failed to load books');
+
+    const data = await response.json();
+    const items = data.items || [];
+
+    if (items.length === 0) {
+      container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem 0;"><p>No books available right now.</p></div>`;
+      return;
+    }
+
+    // Shuffle and slice to pick 3 random books
+    const shuffled = [...items].sort(() => 0.5 - Math.random());
+    const randomBooks = shuffled.slice(0, count);
+
+    container.innerHTML = randomBooks.map(createBookCardHTML).join('');
+  } catch (err) {
+    console.error('[HOME BOOKS ERROR]', err);
+    container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem 0;"><p>Unable to load books right now.</p></div>`;
   }
 }

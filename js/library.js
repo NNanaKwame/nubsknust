@@ -1,9 +1,7 @@
 // js/library.js
 
 let allLoadedBooks = [];
-let currentBookPageToken = null;
 let currentLibraryFilter = 'all';
-let isFetchingBooks = false;
 
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('libraryGrid');
@@ -21,11 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderFilteredBooks();
       });
     });
-  }
-
-  const loadMoreBtn = document.getElementById('libraryLoadMore');
-  if (loadMoreBtn) {
-    loadMoreBtn.addEventListener('click', () => fetchBooks());
   }
 });
 
@@ -68,55 +61,29 @@ function renderFilteredBooks() {
 }
 
 async function fetchBooks() {
-  if (isFetchingBooks) return;
-  isFetchingBooks = true;
-
   const grid = document.getElementById('libraryGrid');
-  const loadMoreWrap = document.getElementById('libraryLoadMoreWrap');
-  const loadMoreBtn = document.getElementById('libraryLoadMore');
-
-  if (loadMoreBtn) {
-    loadMoreBtn.disabled = true;
-    loadMoreBtn.textContent = 'Loading...';
-  }
 
   try {
-    let url = '/api/get-books?limit=12';
-    if (currentBookPageToken) url += `&pageToken=${currentBookPageToken}`;
+    console.log('[LIBRARY] Fetching /books.json...');
+    const response = await fetch('/books.json');
+    console.log('[LIBRARY] Response status:', response.status, response.statusText);
 
-    const response = await fetch(url);
+    if (!response.ok) throw new Error(`Failed to load library data: ${response.status} ${response.statusText}`);
+
     const data = await response.json();
+    console.log('[LIBRARY] Parsed data successfully:', data);
 
-    if (!response.ok) throw new Error(data.error || 'Failed to load library');
+    allLoadedBooks = data.items || [];
+    console.log(`[LIBRARY] Loaded ${allLoadedBooks.length} books into state.`);
 
-    const items = data.items || [];
-
-    if (items.length === 0 && allLoadedBooks.length === 0) {
+    if (allLoadedBooks.length === 0) {
       grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">No books available yet &mdash; check back soon.</div>`;
-      if (loadMoreWrap) loadMoreWrap.style.display = 'none';
       return;
     }
 
-    items.forEach((book) => {
-      if (!allLoadedBooks.some((b) => b.id === book.id)) {
-        allLoadedBooks.push(book);
-      }
-    });
-
     renderFilteredBooks();
-
-    currentBookPageToken = data.nextPageToken;
-    if (loadMoreWrap) loadMoreWrap.style.display = currentBookPageToken ? 'block' : 'none';
   } catch (err) {
     console.error('[LIBRARY ERROR]', err);
-    if (allLoadedBooks.length === 0) {
-      grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">Unable to load the library right now.</div>`;
-    }
-  } finally {
-    isFetchingBooks = false;
-    if (loadMoreBtn) {
-      loadMoreBtn.disabled = false;
-      loadMoreBtn.textContent = 'Load More Books';
-    }
+    grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">Unable to load the library right now. Check console for details.</div>`;
   }
 }
