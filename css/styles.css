@@ -3709,16 +3709,15 @@ html {
 }
 
 body {
-  background: linear-gradient(135deg, #fdf3e7 0%, #f3eefb 55%, #eaf0fb 100%);
-  background-attachment: fixed;
-  background-size: cover;
+  background: transparent; /* gradient now lives on body::before instead, see below */
 }
 
-@media (max-width: 768px) {
-  body {
-    background-attachment: scroll;
-    /* fixed backgrounds are unreliable on iOS Safari */
-  }
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #fdf3e7 0%, #f3eefb 55%, #eaf0fb 100%);
 }
 
 /* --- Feature icons & blog banners ----------------------------------------- */
