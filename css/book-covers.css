@@ -1,0 +1,14 @@
+/* Keep the existing title card visible until its PDF thumbnail loads. */
+.book-cover-preview { position: relative; }
+.book-cover-image {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #f5f2f8;
+  opacity: 0;
+}
+.book-cover-image.is-loaded { opacity: 1; }
+.book-card-heading { color: #393257; font-size: 1rem; font-weight: 700; line-height: 1.4; margin: .6rem 0; }

@@ -1,0 +1,73 @@
+name: Update library catalogue
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: library-catalogue
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run test:books
+      - name: Validate deployment configuration
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$VERCEL_DEPLOY_HOOK" ]; then
+            echo 'Configure VERCEL_DEPLOY_HOOK before enabling catalogue updates.'
+            exit 1
+          fi
+      - name: Import new and changed books
+        run: npm run sync:books
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DRIVE_BOOKS_FOLDER_ID: ${{ secrets.DRIVE_BOOKS_FOLDER_ID }}
+      - name: Commit updated catalogue
+        id: commit
+        run: |
+          if git diff --quiet -- books.json; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add books.json
+          git commit -m 'Update library catalogue'
+          git push
+          echo 'changed=true' >> "$GITHUB_OUTPUT"
+      - name: Request Vercel deployment
+        # Manual runs also allow retrying a failed deploy hook after a successful commit.
+        if: steps.commit.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          node --input-type=module <<'JS'
+          try {
+            const response = await fetch(process.env.VERCEL_DEPLOY_HOOK, {
+              method: 'POST', signal: AbortSignal.timeout(30000),
+            });
+            if (!response.ok) throw new Error('Hook rejected');
+            console.log('Vercel deployment requested. Check Vercel for deployment completion.');
+          } catch {
+            console.error('Deployment request failed. Check the hook and manually rerun this workflow.');
+            process.exitCode = 1;
+          }
+          JS

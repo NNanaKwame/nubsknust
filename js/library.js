@@ -2,12 +2,38 @@
 
 let allLoadedBooks = [];
 let currentLibraryFilter = 'all';
+let libraryLoaded = false;
+
+function normalizeSearch(value) {
+  return String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('libraryGrid');
   if (!grid) return;
 
   fetchBooks();
+  document.getElementById('librarySearch')?.addEventListener('input', renderFilteredBooks);
+  const toggle = document.getElementById('librarySearchToggle');
+  const field = document.getElementById('librarySearchField');
+  const search = document.getElementById('librarySearch');
+  function closeSearch() {
+    search.value = '';
+    field.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+    renderFilteredBooks();
+    toggle.focus();
+  }
+  toggle.addEventListener('click', () => {
+    if (!field.hidden) return closeSearch();
+    field.hidden = false;
+    toggle.setAttribute('aria-expanded', 'true');
+    search.focus();
+  });
+  document.getElementById('librarySearchClose').addEventListener('click', closeSearch);
+  search.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeSearch();
+  });
 
   const filterGroup = document.getElementById('libraryFilters');
   if (filterGroup) {
@@ -24,7 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function bookCoverHTML(book) {
   return `
-    <div class="book-cover ${book.badgeClass}">
+    <div class="book-cover book-cover-preview ${book.badgeClass}">
+      ${bookCoverImageHTML(book)}
       <i class="bi bi-book-fill"></i>
       <span class="book-cover-title">${book.title}</span>
     </div>
@@ -37,6 +64,7 @@ function createBookCardHTML(book) {
       ${bookCoverHTML(book)}
       <div class="book-card-body">
         <span class="gathering-badge ${book.badgeClass}">${book.categoryName}</span>
+        <h3 class="book-card-heading">${book.title}</h3>
         <p class="book-card-author">${book.author}</p>
         <p class="book-card-desc">${book.description || ''}</p>
       </div>
@@ -46,14 +74,23 @@ function createBookCardHTML(book) {
 
 function renderFilteredBooks() {
   const grid = document.getElementById('libraryGrid');
-  if (!grid) return;
+  if (!grid || !libraryLoaded) return;
 
-  const filtered = currentLibraryFilter === 'all'
-    ? allLoadedBooks
-    : allLoadedBooks.filter((b) => b.category === currentLibraryFilter);
+  const query = document.getElementById('librarySearch')?.value.trim() || '';
+  const terms = normalizeSearch(query).split(/\s+/).filter(Boolean);
+  const filtered = allLoadedBooks.filter((book) => {
+    if (currentLibraryFilter !== 'all' && !book.categories.includes(currentLibraryFilter)) return false;
+    const searchable = normalizeSearch([book.title, book.author].join(' '));
+    return terms.every((term) => searchable.includes(term));
+  });
+  const status = document.getElementById('libraryResults');
+  if (status) status.textContent = `${filtered.length} ${filtered.length === 1 ? 'book' : 'books'} found${query ? ` for “${query}”` : ''}${currentLibraryFilter !== 'all' ? ' in this category' : ''}.`;
 
   if (filtered.length === 0) {
-    grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">No books in this category yet.</div>`;
+    const message = allLoadedBooks.length === 0
+      ? 'No books available yet — check back soon.'
+      : terms.length ? 'No matching books. Try a different keyword or select All Books.' : 'No books in this category yet.';
+    grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">${message}</div>`;
     return;
   }
 
@@ -73,17 +110,17 @@ async function fetchBooks() {
     const data = await response.json();
     console.log('[LIBRARY] Parsed data successfully:', data);
 
-    allLoadedBooks = data.items || [];
+    allLoadedBooks = uniqueLibraryBooks(data.items || []);
+    libraryLoaded = true;
+    const search = document.getElementById('librarySearch');
+    if (search) search.disabled = false;
     console.log(`[LIBRARY] Loaded ${allLoadedBooks.length} books into state.`);
-
-    if (allLoadedBooks.length === 0) {
-      grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">No books available yet &mdash; check back soon.</div>`;
-      return;
-    }
 
     renderFilteredBooks();
   } catch (err) {
     console.error('[LIBRARY ERROR]', err);
-    grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">Unable to load the library right now. Check console for details.</div>`;
+    const status = document.getElementById('libraryResults');
+    if (status) status.textContent = 'Library unavailable. Please refresh to try again.';
+    grid.innerHTML = `<div class="gallery-empty" style="grid-column: 1 / -1;">${location.protocol === 'file:' ? 'Open the library through the local web server at http://localhost:3000/library.html to load books and search.' : 'Unable to load the library right now. Please refresh to try again.'}</div>`;
   }
 }

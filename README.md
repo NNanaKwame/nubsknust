@@ -122,3 +122,11 @@ This site deliberately has **no CMS or admin panel**. Content is managed entirel
 
 ---
 
+
+## Library importer and scheduled updates
+
+The library now uses root `books.json`, generated with `npm run sync:books`.
+Unchanged PDFs are skipped using Drive modification timestamps. See
+[LIBRARY-UPDATES.md](LIBRARY-UPDATES.md) for the current importer behavior and
+GitHub Actions/Vercel activation instructions; this supersedes the live-library
+API workflow described above.

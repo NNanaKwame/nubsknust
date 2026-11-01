@@ -16,6 +16,8 @@
     </noscript>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/library.css" rel="stylesheet" />
+    <link href="/css/book-covers.css" rel="stylesheet" />
     <!-- Vercel Speed Insights -->
     <script type="module" src="/js/speed-insights.js"></script>
 </head>
@@ -48,6 +50,19 @@
                 <p class="section-subtext">Access foundational Christian literature, devotionals, and leadership guides for free</p>
             </div>
 
+            <div class="library-toolbar">
+            <div class="library-search" role="search" aria-label="Search the library">
+                <button type="button" id="librarySearchToggle" class="library-search-button" aria-label="Search books" aria-expanded="false" aria-controls="librarySearchField" title="Search books">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+                </button>
+                <div id="librarySearchField" class="library-search-field" hidden>
+                    <input type="search" id="librarySearch" placeholder="Title or author…" aria-label="Search by title or author" aria-describedby="libraryResults" />
+                    <button type="button" id="librarySearchClose" class="library-search-button" aria-label="Clear and close search" title="Close search">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg>
+                    </button>
+                </div>
+            </div>
+
             <div class="filter-chip-group" id="libraryFilters">
                 <button class="filter-chip active" data-filter="all">All Books</button>
                 <button class="filter-chip" data-filter="devotional">Devotional</button>
@@ -55,6 +70,10 @@
                 <button class="filter-chip" data-filter="leadership">Leadership</button>
                 <button class="filter-chip" data-filter="discipleship">Discipleship</button>
             </div>
+
+            </div>
+
+            <p id="libraryResults" class="text-muted small" role="status" aria-live="polite" aria-atomic="true">Loading books…</p>
 
             <div id="libraryGrid" class="book-grid">
                 <div class="gallery-empty" style="grid-column: 1 / -1;">
@@ -84,6 +103,7 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <!-- Library JS -->
+    <script src="/js/book-catalogue.js"></script>
     <script src="js/library.js"></script>
 </body>
 

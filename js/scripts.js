@@ -298,12 +298,14 @@ async function loadWingImages() {
 function createBookCardHTML(book) {
   return `
     <a href="${book.driveUrl}" target="_blank" rel="noopener noreferrer" class="book-card">
-      <div class="book-cover ${book.badgeClass}">
+      <div class="book-cover book-cover-preview ${book.badgeClass}">
+        ${bookCoverImageHTML(book)}
         <i class="bi bi-book-fill"></i>
         <span class="book-cover-title">${book.title}</span>
       </div>
       <div class="book-card-body">
         <span class="gathering-badge ${book.badgeClass}">${book.categoryName}</span>
+        <h3 class="book-card-heading">${book.title}</h3>
         <p class="book-card-author">${book.author}</p>
         <p class="book-card-desc">${book.description || ''}</p>
       </div>
@@ -320,7 +322,7 @@ async function fetchRandomHomeBooks(container, count = 3) {
     if (!response.ok) throw new Error('Failed to load books');
 
     const data = await response.json();
-    const items = data.items || [];
+    const items = uniqueLibraryBooks(data.items || []);
 
     if (items.length === 0) {
       container.innerHTML = `<div style="grid-column: 1 / -1; text-align: center; color: #6b7280; padding: 2rem 0;"><p>No books available right now.</p></div>`;

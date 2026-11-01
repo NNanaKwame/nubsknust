@@ -1,4 +1,21 @@
 .env
 node_modules/
 api/get-books.js
-generate-books.js
+books.json.tmp
+
+# Local book downloads, archives, and acquisition metadata
+/library-acquisitions/
+
+# Local configuration and deployment cache
+.env.*
+!.env.example
+!.env.sample
+.vercel/
+
+# Logs and operating-system temporary files
+*.log
+.DS_Store
+Thumbs.db
+*~
+*.swp
+*.swo
