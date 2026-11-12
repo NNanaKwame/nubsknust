@@ -2,7 +2,7 @@
 
 ## Implemented locally
 
-- Replaced the declared 32px PNG favicon with the existing 75px ICO on every page. Google recommends icons larger than 48px; the old size alone does not establish why Google omitted the icon.
+- Restored the correct brand favicon, assets/nubsknustlogo.png (32px), on every page. The unrelated ICO must not be used. Google recommends an icon larger than 48px; a higher-resolution original of this same logo would improve quality, but the current size meets the minimum and does not establish why Google omitted it.
 - Aligned canonical URLs, social metadata and sitemap with the observed production redirect to https://www.nubsknust.org. Added missing canonical links and the library sitemap entry. Preserved the move away from the old Vercel domain.
 - Removed stale uniform sitemap modification dates and improved main-page descriptions.
 - Marked the incomplete, query-driven event detail template noindex until reliable individual event metadata is available.
@@ -19,7 +19,7 @@ Security regression tests and existing book-sync tests pass. HTTP checks confirm
 
 ## After deployment
 
-1. Check https://www.nubsknust.org/assets/favicon.ico and the homepage.
+1. Check https://www.nubsknust.org/assets/nubsknustlogo.png and the homepage.
 2. Use Google Search Console URL Inspection to request indexing of https://www.nubsknust.org/.
 3. Submit https://www.nubsknust.org/sitemap.xml.
 4. Allow days to weeks for Google's favicon refresh. Appearance is not guaranteed.

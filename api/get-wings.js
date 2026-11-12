@@ -19,5 +19,6 @@ export default function getWingsHandler(req, res) {
     };
   }).filter(wing => wing.id !== null);
 
+  res.setHeader("Cache-Control", "public, max-age=300, s-maxage=300");
   return res.json({ wings });
 }

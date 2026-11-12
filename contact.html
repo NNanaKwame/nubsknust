@@ -7,7 +7,7 @@
     <meta name="description" content="Connect with NUBS KNUST, ask a question, or find out how to join our Baptist student fellowship at KNUST." />
     <title>Contact & Join - NUBS KNUST</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" sizes="75x75" href="/assets/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/nubsknustlogo.png" />
     <!-- Bootstrap Icons-->
     <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" as="style"
         onload="this.onload=null;this.rel='stylesheet'" />
@@ -115,6 +115,7 @@
                                 us a message.</p>
 
                             <form id="contactForm" action="https://formspree.io/f/xdaqjlwq" method="POST">
+                                <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none" />
 
                                 <!-- Personal Info -->
                                 <div class="row g-3 mb-3">
@@ -236,6 +237,8 @@
                                     <textarea class="form-control" id="message" name="message" rows="4"
                                         placeholder="Write your message here..."></textarea>
                                 </div>
+
+                                <p class="small text-muted">Read our <a href="/privacy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Use</a> before submitting your details.</p>
 
                                 <!-- Submit Button -->
                                 <button class="btn-accent btn-lg w-100" type="submit">Submit Form</button>

@@ -9,6 +9,10 @@
 // to, and that the key isn't restricted to exclude it).
 
 const DRIVE_FILES_ENDPOINT = "https://www.googleapis.com/drive/v3/files";
+let galleryCache = null;
+let pendingGallery = null;
+const CACHE_TTL_MS = 5 * 60 * 1000;
+
 const MAX_DEPTH = 5;      // how many subfolder levels deep to search
 const MAX_FOLDERS = 200;  // safety cap on total folders visited, protects your Drive API quota
 
@@ -67,6 +71,7 @@ async function walkFolder(folderId, apiKey, mimePrefix, mapFn, depth, state) {
     files = await listFolder(folderId, apiKey);
   } catch (err) {
     console.error(`[gallery] Failed to list folder ${folderId}:`, err.message);
+    state.failed = true;
     return [];
   }
 
@@ -93,16 +98,34 @@ export default async function getGalleryMediaHandler(req, res) {
   }
 
   try {
-    const [photos, videos] = await Promise.all([
-      walkFolder(photosFolderId, apiKey, "image/", toPhotoItem, 0, { foldersVisited: 0 }),
-      walkFolder(videosFolderId, apiKey, "video/", toVideoItem, 0, { foldersVisited: 0 }),
-    ]);
-
-    photos.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
-    videos.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
-
-    res.setHeader("Cache-Control", "public, max-age=300"); // cache 5 min — short enough to reflect new uploads quickly
-    return res.json({ photos, videos });
+    const key = JSON.stringify([photosFolderId, videosFolderId, apiKey]);
+    let result;
+    if (galleryCache?.key === key && galleryCache.expires > Date.now()) {
+      result = galleryCache.result;
+    } else {
+      // Concurrent requests on a warm instance share one Drive traversal.
+      if (!pendingGallery || pendingGallery.key !== key) {
+        const task = { key };
+        task.promise = (async () => {
+          const photoState = { foldersVisited: 0, failed: false };
+          const videoState = { foldersVisited: 0, failed: false };
+          const [photos, videos] = await Promise.all([
+            walkFolder(photosFolderId, apiKey, "image/", toPhotoItem, 0, photoState),
+            walkFolder(videosFolderId, apiKey, "video/", toVideoItem, 0, videoState),
+          ]);
+          photos.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+          videos.sort((a, b) => new Date(b.createdTime) - new Date(a.createdTime));
+          const loaded = { photos, videos, partial: photoState.failed || videoState.failed };
+          if (!loaded.partial) galleryCache = { key, result: loaded, expires: Date.now() + CACHE_TTL_MS };
+          return loaded;
+        })().finally(() => { if (pendingGallery === task) pendingGallery = null; });
+        pendingGallery = task;
+      }
+      result = await pendingGallery.promise;
+    }
+    // Do not cache an incomplete result after a temporary Drive error.
+    res.setHeader("Cache-Control", result.partial ? "no-store" : "public, max-age=300, s-maxage=300");
+    return res.json({ photos: result.photos, videos: result.videos });
   } catch (err) {
     console.error("[gallery] get-gallery-media error:", err.message);
     return res.status(500).json({ error: "Server error fetching gallery media" });
