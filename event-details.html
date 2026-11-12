@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event Details</title>
+  <title>Event Details | NUBS KNUST</title>
+  <meta name="robots" content="noindex, follow" />
   <link rel="stylesheet" href="/css/styles.css">
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="/assets/nubsknustlogo.png" />
+  <link rel="icon" type="image/x-icon" sizes="75x75" href="/assets/favicon.ico" />
   <!-- Vercel Web Analytics -->
   <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
   <!-- Vercel Speed Insights -->
@@ -43,6 +44,7 @@
       margin-bottom: 1rem;
     }
   </style>
+    <script src="/js/html-safety.js"></script>
 </head>
 
 <body>
@@ -75,15 +77,15 @@
         }
 
         container.innerHTML = `
-          <img src="${event.imageUrl}" alt="${event.title}" class="details-banner" />
-          <h1>${event.title}</h1>
+          <img src="/api/image-proxy?id=${encodeURIComponent(event.id)}" alt="${escapeHTML(event.title)}" class="details-banner" />
+          <h1>${escapeHTML(event.title)}</h1>
           <div class="details-meta">
-            <span>📅 ${event.date}</span>
-            <span>📍 ${event.location || 'KNUST Campus'}</span>
+            <span>📅 ${escapeHTML(event.date)}</span>
+            <span>📍 ${escapeHTML(event.location || 'KNUST Campus')}</span>
           </div>
           <hr />
           <p style="font-size: 1.1rem; line-height: 1.6; color: #374151; margin-top: 1.5rem;">
-            ${event.description}
+            ${escapeHTML(event.description)}
           </p>
         `;
       } catch (err) {

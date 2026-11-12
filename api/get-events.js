@@ -62,7 +62,9 @@ export default async function handler(req, res) {
   const category = req.query.type === 'posts' ? 'posts' : 'events';
   const folderId = (category === 'posts' ? process.env.DRIVE_POSTS_FOLDER_ID : process.env.DRIVE_EVENTS_FOLDER_ID || '').trim();
 
-  const limit = req.query.limit ? parseInt(req.query.limit) : 6;
+  const limit = req.query.limit === undefined ? 6 : Number(req.query.limit);
+  if (!Number.isInteger(limit) || limit < 1 || limit > 12) return res.status(400).json({ error: 'Limit must be between 1 and 12' });
+  if (req.query.pageToken !== undefined && (typeof req.query.pageToken !== 'string' || req.query.pageToken.length > 2048)) return res.status(400).json({ error: 'Invalid page token' });
   const pageToken = req.query.pageToken || '';
 
   if (!GOOGLE_API_KEY || !GEMINI_API_KEY || !folderId) {
@@ -74,7 +76,7 @@ export default async function handler(req, res) {
     let metadataUrl = `https://www.googleapis.com/drive/v3/files?q=${qParam}&orderBy=createdTime%20desc&pageSize=${limit}&fields=nextPageToken,files(id,name,mimeType,modifiedTime,createdTime)&key=${GOOGLE_API_KEY}`;
 
     if (pageToken) {
-      metadataUrl += `&pageToken=${pageToken}`;
+      metadataUrl += `&pageToken=${encodeURIComponent(pageToken)}`;
     }
 
     const driveResp = await fetch(metadataUrl);
@@ -82,7 +84,7 @@ export default async function handler(req, res) {
 
     if (driveData.error) {
       console.error("[DRIVE API ERROR]:", driveData.error);
-      return res.status(500).json({ error: driveData.error.message });
+      return res.status(500).json({ error: "Failed to load content" });
     }
 
     const files = driveData.files || [];
@@ -232,6 +234,6 @@ export default async function handler(req, res) {
 
   } catch (error) {
     console.error("[TOP HANDLER ERROR]:", error);
-    return res.status(500).json({ error: "Failed to load content", details: error.message });
+    return res.status(500).json({ error: "Failed to load content" });
   }
 }

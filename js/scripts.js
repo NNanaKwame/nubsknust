@@ -73,14 +73,13 @@ function createEventCardHTML(event, index = 1) {
   const { month, day } = parseDateBadge(event.date);
   const isFirst = index === 0;
 
-  const sep = event.imageUrl.includes('?') ? '&' : '?';
-  const imgSrc = `${event.imageUrl}${sep}w=700`;
+  const imgSrc = `/api/image-proxy?id=${encodeURIComponent(event.id)}&w=700`;
 
   return `
-    <a href="event-details.html?id=${event.id}" class="event-card">
+    <a href="event-details.html?id=${encodeURIComponent(event.id)}" class="event-card">
       <img 
         src="${imgSrc}" 
-        alt="${event.title || 'Event Flyer'}" 
+        alt="${escapeHTML(event.title || 'Event Flyer')}"
         class="event-card-img" 
         width="600" height="220"
         ${isFirst ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"'}
@@ -91,10 +90,10 @@ function createEventCardHTML(event, index = 1) {
           <span class="event-date-day">${day}</span>
         </div>
         <div class="event-info">
-          ${event.tag ? `<span class="event-status-badge ${event.tagClass || ''}">${event.tag}</span>` : ''}
-          <div class="event-location">${event.location || 'KNUST Campus'}</div>
-          <h3 class="event-title">${event.title || 'Special Gathering'}</h3>
-          <p class="event-desc">${event.description || ''}</p>
+          ${event.tag ? `<span class="event-status-badge ${escapeHTML(event.tagClass || '')}">${escapeHTML(event.tag)}</span>` : ''}
+          <div class="event-location">${escapeHTML(event.location || 'KNUST Campus')}</div>
+          <h3 class="event-title">${escapeHTML(event.title || 'Special Gathering')}</h3>
+          <p class="event-desc">${escapeHTML(event.description || '')}</p>
         </div>
       </div>
     </a>
@@ -297,17 +296,17 @@ async function loadWingImages() {
  */
 function createBookCardHTML(book) {
   return `
-    <a href="${book.driveUrl}" target="_blank" rel="noopener noreferrer" class="book-card">
-      <div class="book-cover book-cover-preview ${book.badgeClass}">
+    <a href="${safeBookURL(book.driveUrl)}" target="_blank" rel="noopener noreferrer" class="book-card">
+      <div class="book-cover book-cover-preview ${escapeHTML(book.badgeClass)}">
         ${bookCoverImageHTML(book)}
         <i class="bi bi-book-fill"></i>
-        <span class="book-cover-title">${book.title}</span>
+        <span class="book-cover-title">${escapeHTML(book.title)}</span>
       </div>
       <div class="book-card-body">
-        <span class="gathering-badge ${book.badgeClass}">${book.categoryName}</span>
-        <h3 class="book-card-heading">${book.title}</h3>
-        <p class="book-card-author">${book.author}</p>
-        <p class="book-card-desc">${book.description || ''}</p>
+        <span class="gathering-badge ${escapeHTML(book.badgeClass)}">${escapeHTML(book.categoryName)}</span>
+        <h3 class="book-card-heading">${escapeHTML(book.title)}</h3>
+        <p class="book-card-author">${escapeHTML(book.author)}</p>
+        <p class="book-card-desc">${escapeHTML(book.description || '')}</p>
       </div>
     </a>
   `;

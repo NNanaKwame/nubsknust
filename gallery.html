@@ -4,10 +4,10 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="Photo & video gallery - NUBS KNUST" />
+    <meta name="description" content="Browse photos and videos from NUBS KNUST worship, fellowship, events, and student activities." />
     <title>Gallery - NUBS KNUST</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/assets/nubsknustlogo.png" />
+    <link rel="icon" type="image/x-icon" sizes="75x75" href="/assets/favicon.ico" />
     <!-- Bootstrap Icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
@@ -16,6 +16,8 @@
     <script defer src="https://cdn.vercel-insights.com/v1/script.js"></script>
     <!-- Vercel Speed Insights -->
     <script type="module" src="/js/speed-insights.js"></script>
+    <link rel="canonical" href="https://www.nubsknust.org/gallery.html" />
+    <script src="/js/html-safety.js"></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -156,13 +158,13 @@
                 if (item.mediaType === "photo") {
                     return `
                         <div class="gallery-page-tile" onclick="openLightbox(${i})">
-                            <img src="${item.src}" alt="${item.alt || ''}" loading="lazy" width="400" height="400" />
+                            <img src="${escapeHTML(item.src)}" alt="${escapeHTML(item.alt || '')}" loading="lazy" width="400" height="400" />
                         </div>
                     `;
                 }
                 return `
                     <div class="gallery-page-tile is-video" onclick="openLightbox(${i})">
-                        <img src="${item.thumbnail}" alt="${item.title || ''}" loading="lazy" width="400" height="400" />
+                        <img src="${escapeHTML(item.thumbnail)}" alt="${escapeHTML(item.title || '')}" loading="lazy" width="400" height="400" />
                         <div class="video-thumb-platform"><i class="bi bi-cloud-fill"></i></div>
                         <div class="video-thumb-play"><span><i class="bi bi-play-fill"></i></span></div>
                     </div>
@@ -185,7 +187,7 @@
             if (window.innerWidth <= 767.98 && item.mediaType === 'video') {
                 if (item.embedUrl) {
                     // Open direct embed/video link in a clean new tab/native player
-                    window.open(item.embedUrl, '_blank');
+                    window.open(item.embedUrl, '_blank', 'noopener,noreferrer');
                     return;
                 }
             }
@@ -205,10 +207,10 @@
             content.classList.remove("is-vertical");
 
             if (item.mediaType === "photo") {
-                media.innerHTML = `<img src="${item.src}" alt="${item.alt || ''}" />`;
+                media.innerHTML = `<img src="${escapeHTML(item.src)}" alt="${escapeHTML(item.alt || '')}" />`;
                 caption.textContent = item.alt || "";
             } else {
-                media.innerHTML = `<iframe src="${item.embedUrl}" title="${item.title || ''}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                media.innerHTML = `<iframe src="${escapeHTML(item.embedUrl)}" title="${escapeHTML(item.title || '')}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
                 caption.textContent = item.title || "";
                 if (item.vertical) content.classList.add("is-vertical");
             }

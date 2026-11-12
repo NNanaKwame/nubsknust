@@ -50,23 +50,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function bookCoverHTML(book) {
   return `
-    <div class="book-cover book-cover-preview ${book.badgeClass}">
+    <div class="book-cover book-cover-preview ${escapeHTML(book.badgeClass)}">
       ${bookCoverImageHTML(book)}
       <i class="bi bi-book-fill"></i>
-      <span class="book-cover-title">${book.title}</span>
+      <span class="book-cover-title">${escapeHTML(book.title)}</span>
     </div>
   `;
 }
 
 function createBookCardHTML(book) {
   return `
-    <a href="${book.driveUrl}" target="_blank" rel="noopener noreferrer" class="book-card">
+    <a href="${safeBookURL(book.driveUrl)}" target="_blank" rel="noopener noreferrer" class="book-card">
       ${bookCoverHTML(book)}
       <div class="book-card-body">
-        <span class="gathering-badge ${book.badgeClass}">${book.categoryName}</span>
-        <h3 class="book-card-heading">${book.title}</h3>
-        <p class="book-card-author">${book.author}</p>
-        <p class="book-card-desc">${book.description || ''}</p>
+        <span class="gathering-badge ${escapeHTML(book.badgeClass)}">${escapeHTML(book.categoryName)}</span>
+        <h3 class="book-card-heading">${escapeHTML(book.title)}</h3>
+        <p class="book-card-author">${escapeHTML(book.author)}</p>
+        <p class="book-card-desc">${escapeHTML(book.description || '')}</p>
       </div>
     </a>
   `;

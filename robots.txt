@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://nubsknust.vercel.app/sitemap.xml
+Sitemap: https://www.nubsknust.org/sitemap.xml

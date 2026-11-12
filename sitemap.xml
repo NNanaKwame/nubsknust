@@ -3,39 +3,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <url>
-       <loc>https://nubsknust.vercel.app/</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/</loc>
        <priority>1.0000</priority>
   </url>
   <url>
-       <loc>https://nubsknust.vercel.app/about.html</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/about.html</loc>
        <priority>0.8000</priority>
   </url>
   <url>
-       <loc>https://nubsknust.vercel.app/wings.html</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/wings.html</loc>
        <priority>0.8000</priority>
   </url>
   <url>
-       <loc>https://nubsknust.vercel.app/events.html</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/events.html</loc>
        <priority>0.8000</priority>
   </url>
   <url>
-       <loc>https://nubsknust.vercel.app/contact.html</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/contact.html</loc>
        <priority>0.8000</priority>
   </url>
   <url>
-       <loc>https://nubsknust.vercel.app/gallery.html</loc>
-       <lastmod>2026-07-27T16:06:53+00:00</lastmod>
-       <changefreq>daily</changefreq>
+       <loc>https://www.nubsknust.org/gallery.html</loc>
        <priority>0.8000</priority>
   </url>
+  <url><loc>https://www.nubsknust.org/library.html</loc></url>
 </urlset>

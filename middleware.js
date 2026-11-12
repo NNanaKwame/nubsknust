@@ -15,6 +15,14 @@ export default function middleware(request) {
   const host = request.headers.get('host') || '';
   const url = new URL(request.url);
 
+  // Block repository-only files before static file routing on Vercel.
+  let pathname;
+  try { pathname = decodeURIComponent(url.pathname); } catch { return new Response('Bad request', { status: 400 }); }
+  if (/(^|\/)(?:\.[^/]+|node_modules|library-acquisitions|tests)(?:\/|$)/.test(pathname) ||
+      /^\/(?:generate-books\.js|server\.js|middleware\.js|package(?:-lock)?\.json|vercel\.json|.*\.md|books\.json\.tmp)$/i.test(pathname)) {
+    return new Response('Not found', { status: 404 });
+  }
+
   if (host === 'library.nubsknust.org' && url.pathname === '/') {
     return rewrite(new URL('/library.html', request.url));
   }
@@ -23,5 +31,5 @@ export default function middleware(request) {
 }
 
 export const config = {
-  matcher: '/',
+  matcher: '/:path*',
 };
