@@ -70,6 +70,20 @@ export async function listDriveChildren(folderId, apiKey, extraFields = "") {
   return files;
 }
 
+// Retry only transient failures; never log request URLs or credentials here.
+export async function retryGemini(operation, { sleep = ms => new Promise(resolve => setTimeout(resolve, ms)), warn = console.warn } = {}) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try { return await operation(); } catch (error) {
+      const status = Number(error.status);
+      const transient = [429, 500, 502, 503, 504].includes(status) ||
+        (!status && /fetch failed|timeout|timed out|abort|ECONNRESET|ETIMEDOUT/i.test(String(error.message)));
+      if (!transient || attempt === 3) throw error;
+      warn(`Gemini request interrupted; retrying (${attempt + 1}/3).`);
+      await sleep(attempt * 5000);
+    }
+  }
+}
+
 // A failed import never replaces the published catalogue or marks a PDF current.
 export async function syncBooks(files, existingItems, extract) {
   const existing = new Map(existingItems.map(book => [book.id, book]));
@@ -124,6 +138,9 @@ async function run() {
   const previous = fs.existsSync(outputPath) ? JSON.parse(fs.readFileSync(outputPath, 'utf8')) : { items: [] };
   if (!Array.isArray(previous.items)) throw new Error('Invalid existing catalogue');
   if (!allFiles.length && previous.items.length) throw new Error('Drive returned no PDFs; refusing to empty the existing catalogue.');
+  const legacyCount = previous.items.filter(book => !book.modifiedTime).length;
+  if (legacyCount) console.log(`${legacyCount} older entries lack sync timestamps and require initial verification.`);
+  console.log(`Using Gemini model: ${MODEL_CANDIDATE}; 60s timeout, up to 3 attempts per book.`);
   const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
   const { items, processed } = await syncBooks(allFiles, previous.items, async (file) => {
     console.log(`Parsing: ${file.name}`);
@@ -155,10 +172,10 @@ async function run() {
       - description: A concise 1-2 sentence summary of what the book is about.
     `;
 
-    const aiResult = await model.generateContent([
+    const aiResult = await retryGemini(() => model.generateContent([
       prompt,
       { inlineData: { data: base64Intro, mimeType: "application/pdf" } },
-    ]);
+    ], { timeout: 60000 }));
 
     const parsed = JSON.parse(aiResult.response.text());
     if (!parsed || typeof parsed.title !== 'string' || !parsed.title.trim() ||

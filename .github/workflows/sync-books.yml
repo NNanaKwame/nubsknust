@@ -39,6 +39,7 @@ jobs:
         env:
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_BOOK_MODEL: ${{ vars.GEMINI_BOOK_MODEL }}
           DRIVE_BOOKS_FOLDER_ID: ${{ secrets.DRIVE_BOOKS_FOLDER_ID }}
       - name: Commit updated catalogue
         id: commit

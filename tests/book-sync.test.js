@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { syncBooks, listDriveChildren } from '../generate-books.js';
+import { syncBooks, listDriveChildren, retryGemini } from '../generate-books.js';
 
 const file = { id: 'one', name: 'Book.pdf', category: 'doctrine', createdTime: '2026-01-01', modifiedTime: '2026-02-01' };
 const metadata = { title: 'Book', author: 'Author', description: 'Summary' };
@@ -47,4 +47,18 @@ test('Drive listing follows pagination and rejects failed responses', async () =
     globalThis.fetch = async () => ({ ok: false, status: 403 });
     await assert.rejects(listDriveChildren('folder', 'test'), /403/);
   } finally { globalThis.fetch = originalFetch; }
+});
+
+
+test('transient Gemini failures retry, permanent errors stop, and retries are bounded', async () => {
+  let calls = 0;
+  const options = { sleep: async () => {}, warn: () => {} };
+  assert.equal(await retryGemini(async () => { if (++calls < 3) throw Error('fetch failed'); return 'ok'; }, options), 'ok');
+  assert.equal(calls, 3);
+  calls = 0;
+  await assert.rejects(retryGemini(async () => { calls++; throw Object.assign(Error('Forbidden'), {status:403}); }, options));
+  assert.equal(calls, 1);
+  calls = 0;
+  await assert.rejects(retryGemini(async () => { calls++; throw Object.assign(Error('Unavailable'), {status:503}); }, options));
+  assert.equal(calls, 3);
 });
