@@ -14,6 +14,8 @@
     <script type="module" src="/js/speed-insights.js"></script>
     <link rel="canonical" href="https://www.nubsknust.org/about.html" />
     <script src="/js/html-safety.js"></script>
+    <link rel="stylesheet" href="/css/site-footer.css" />
+    <link rel="stylesheet" href="/css/about.css" />
 </head>
 
 <body class="d-flex flex-column h-100 bg-light">
@@ -118,6 +120,7 @@
                             <div class="gathering-body">
                                 <span class="gathering-badge badge-indigo">Sundays</span>
                                 <h5 class="gathering-title">Sunday Service</h5>
+                                <p class="gathering-time">9:00 am – 12:30 pm</p>
                                 <p class="gathering-text">Our main fellowship service bringing the entire church body
                                     together for worship and the Word.</p>
                             </div>
@@ -132,8 +135,8 @@
                             <div class="gathering-body">
                                 <span class="gathering-badge badge-sage">Tuesdays</span>
                                 <h5 class="gathering-title">Mid-Week Service</h5>
-                                <p class="gathering-text">Decentralized branch service gatherings designed for nurturing
-                                    smaller groups.</p>
+                                <p class="gathering-time">6:30 pm – 8:00 pm</p>
+                                <p class="gathering-text">Our midweek service brings us together for worship, the Word, and fellowship.</p>
                             </div>
                         </div>
                     </div>
@@ -146,6 +149,7 @@
                             <div class="gathering-body">
                                 <span class="gathering-badge badge-gold">Thursdays</span>
                                 <h5 class="gathering-title">Prayer Meetings</h5>
+                                <p class="gathering-time">6:00 pm – 7:00 pm</p>
                                 <p class="gathering-text">Focused intercession and prayer sessions organized across
                                     various prayer centers.</p>
                             </div>
@@ -160,6 +164,7 @@
                             <div class="gathering-body">
                                 <span class="gathering-badge badge-clay">Weekly</span>
                                 <h5 class="gathering-title">Dawn & Cell Meetings</h5>
+                                <p class="gathering-time">Time determined by your cell group</p>
                                 <p class="gathering-text">Dawn prayer sessions and hall/area cell group meetings for
                                     localized fellowship.</p>
                             </div>
@@ -236,53 +241,71 @@
                 </div>
             </section>
 
-            <!-- Section 4: Governance & Affiliations Card Grid -->
-            <section class="glass-section rounded-4 p-4 p-md-5">
-                <div class="row g-4">
-                    <div class="col-lg-6">
-                        <div class="gov-panel">
-                            <h3 class="fw-bolder mb-3 text-accent">Official Affiliations</h3>
-                            <p class="text-muted mb-3">NUBS-KNUST operates as an officially recognized student body
-                                affiliated with:</p>
-                            <ul class="list-unstyled text-muted lh-lg mb-0">
-                                <li><strong>National Body:</strong> The National Union of Baptist Students (Ghana
-                                    Baptist Convention).</li>
-                                <li><strong>Campus Body:</strong> The Students Chaplaincy Council (SCC-KNUST) Kumasi.
-                                </li>
-                                <li><strong>Mother Church:</strong> Grace Baptist Church, Kumasi.</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="gov-panel">
-                            <h3 class="fw-bolder mb-3 text-accent">Leadership Structure</h3>
-                            <p class="text-muted mb-3">Governed by the General Council under a Patron from Grace Baptist
-                                Church:</p>
-                            <div class="row g-2 text-center">
-                                <div class="col-12 col-md-4">
-                                    <div class="gov-chip">
-                                        <div class="fw-bold small">Core Execs</div>
-                                        <div class="text-muted extra-small" style="font-size: 0.75rem;">President, VP,
-                                            Sec, Prayer, Treasurer</div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="gov-chip">
-                                        <div class="fw-bold small">Exec Council</div>
-                                        <div class="text-muted extra-small" style="font-size: 0.75rem;">Wing & Auxiliary
-                                            Heads, Overseers</div>
-                                    </div>
-                                </div>
-                                <div class="col-12 col-md-4">
-                                    <div class="gov-chip">
-                                        <div class="fw-bold small">Rep Council</div>
-                                        <div class="text-muted extra-small" style="font-size: 0.75rem;">Hall, Area &
-                                            Int. Student Reps</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Governance & affiliations -->
+            <section class="glass-section rounded-4 p-4 p-md-5 about-governance" aria-labelledby="leadership-heading">
+                <div class="leadership-intro">
+                    <span class="section-eyebrow">Serving our fellowship</span>
+                    <h2 id="leadership-heading" class="section-heading">Leadership Structure</h2>
+                    <p class="section-subtext">Working together to guide, serve, and represent our community.</p>
+                </div>
+                <div class="leadership-anchor gov-panel">
+                    <span class="leadership-label">Spiritual oversight</span>
+                    <h3>Patron &amp; General Council</h3>
+                    <p>Our fellowship is governed by the General Council under a Patron from Grace Baptist Church.</p>
+                </div>
+                <div class="leadership-grid">
+                    <article class="leadership-card gov-panel">
+                        <span class="leadership-number badge-indigo" aria-hidden="true">01</span>
+                        <h3>Core Executives</h3>
+                        <p class="leadership-caption">Coordinating the fellowship</p>
+                        <ul><li>President &amp; Vice President</li><li>Secretary</li><li>Prayer Secretary</li><li>Treasurer</li></ul>
+                    </article>
+                    <article class="leadership-card gov-panel">
+                        <span class="leadership-number badge-sage" aria-hidden="true">02</span>
+                        <h3>Executive Council</h3>
+                        <p class="leadership-caption">Supporting ministry and service</p>
+                        <ul><li>Wing heads</li><li>Auxiliary heads</li><li>Overseers</li></ul>
+                    </article>
+                    <article class="leadership-card gov-panel">
+                        <span class="leadership-number badge-gold" aria-hidden="true">03</span>
+                        <h3>Representative Council</h3>
+                        <p class="leadership-caption">Connecting every part of our community</p>
+                        <ul><li>Hall representatives</li><li>Area representatives</li><li>International student representatives</li></ul>
+                    </article>
+                </div>
+            </section>
+            <section class="glass-section rounded-4 p-4 p-md-5 affiliations-section" aria-labelledby="affiliations-heading">
+                <span class="section-eyebrow">Part of a wider family</span>
+                <h2 id="affiliations-heading" class="section-heading">Official Affiliations</h2>
+                <p class="section-subtext">Our connections within the Baptist family and the KNUST community.</p>
+                <div class="affiliation-grid">
+                    <article class="affiliation-card gov-panel">
+                        <span class="leadership-label">National student body</span><h3><a href="https://www.nubsghana.com/" target="_blank" rel="noopener noreferrer">NUBS Ghana</a></h3>
+                        <p>National Union of Baptist Students, Ghana.</p>
+                    </article>
+                    <article class="affiliation-card gov-panel">
+                        <span class="leadership-label">Baptist convention</span><h3><a href="https://ghanabaptistconvention.com/" target="_blank" rel="noopener noreferrer">Ghana Baptist Convention</a></h3>
+                        <p>Our wider Baptist denominational family.</p>
+                    </article>
+                    <article class="affiliation-card gov-panel">
+                        <span class="leadership-label">Campus body</span><h3>Students’ Chaplaincy Council</h3>
+                        <p>SCC-KNUST, Kumasi.</p>
+                    </article>
+                    <article class="affiliation-card gov-panel">
+                        <span class="leadership-label">Mother church</span><h3><a href="https://gbcamakom.com/" target="_blank" rel="noopener noreferrer">Grace Baptist Church</a></h3>
+                        <p>Amakom, Kumasi.</p>
+                    </article>
+                </div>
+                <div class="campus-family gov-panel">
+                    <span class="leadership-label">Other NUBS campuses</span>
+                    <h3>One fellowship, many campuses</h3>
+                    <p>We share our student ministry journey with other local unions across Ghana.</p>
+                    <ul class="campus-list">
+                        <li><a href="https://nubslegon.com/" target="_blank" rel="noopener noreferrer">NUBS Legon — University of Ghana</a></li>
+                        <li>NUBS UCC — University of Cape Coast</li>
+                        <li>NUBS UPSA — University of Professional Studies, Accra</li>
+                        <li>NUBS UHAS — University of Health and Allied Sciences</li>
+                    </ul>
                 </div>
             </section>
 
@@ -290,18 +313,16 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-dark py-4 mt-auto">
-        <div class="container px-5">
-            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                <div class="col-auto">
-                    <div class="small m-0 text-white">&copy; NUBS KNUST. All Rights Reserved.</div>
-                </div>
-                <div class="col-auto">
-                    <a class="link-light small" href="about.html">About</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="contact.html">Contact</a>
-                </div>
-            </div>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p>&copy; 2026 NUBS KNUST. All Rights Reserved.</p>
+            <nav aria-label="Footer navigation">
+                <a href="/about.html">About</a><span aria-hidden="true">&middot;</span>
+                <a href="/contact.html">Contact</a><span aria-hidden="true">&middot;</span>
+                <a href="/privacy.html">Privacy Policy</a><span aria-hidden="true">&middot;</span>
+                <a href="/terms.html">Terms of Use</a><span aria-hidden="true">&middot;</span>
+                <a href="/cookies.html">Cookie Policy</a>
+            </nav>
         </div>
     </footer>
 

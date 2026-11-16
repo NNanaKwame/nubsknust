@@ -45,6 +45,7 @@
     }
   </style>
     <script src="/js/html-safety.js"></script>
+    <link rel="stylesheet" href="/css/site-footer.css" />
 </head>
 
 <body>
@@ -53,6 +54,18 @@
     <a href="/events.html" class="back-btn">&larr; Back to Events</a>
     <div id="event-detail-content">Loading event details...</div>
   </main>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p>&copy; 2026 NUBS KNUST. All Rights Reserved.</p>
+            <nav aria-label="Footer navigation">
+                <a href="/about.html">About</a><span aria-hidden="true">&middot;</span>
+                <a href="/contact.html">Contact</a><span aria-hidden="true">&middot;</span>
+                <a href="/privacy.html">Privacy Policy</a><span aria-hidden="true">&middot;</span>
+                <a href="/terms.html">Terms of Use</a><span aria-hidden="true">&middot;</span>
+                <a href="/cookies.html">Cookie Policy</a>
+            </nav>
+        </div>
+    </footer>
 
   <script>
     async function fetchEventDetails() {

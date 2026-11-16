@@ -73,6 +73,10 @@
     }
     </script>
     <script src="/js/html-safety.js"></script>
+    <link rel="stylesheet" href="/css/site-footer.css" />
+    <link rel="stylesheet" href="/css/encouragement.css" />
+    <script defer src="/js/encouragement-quotes.js"></script>
+    <script defer src="/js/encouragement.js"></script>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -199,16 +203,12 @@
                 </div>
                 <div class="row gx-5 justify-content-center">
                     <div class="col-lg-10">
-                        <div class="info-card text-center">
-                            <div class="fs-4 mb-4 fst-italic">"If your gifts lie dormant in you, You become a doormat
-                                for the enemy!"</div>
-                            <div class="d-flex align-items-center justify-content-center">
-                                <img class="rounded-circle me-3" src="https://dummyimage.com/40x40/ced4da/6c757d"
-                                    alt="..." width="40" height="40" loading="lazy" />
-                                <div class="fw-bold text-accent">
-                                    Rev Tetteh Annor Larbi
-                                </div>
+                        <div class="info-card text-center" id="encouragement-card">
+                            <div aria-live="polite" aria-atomic="true">
+                                <blockquote class="fs-4 mb-4 fst-italic" id="encouragement-text">“My hope is in a Person, the Lord Jesus Christ, who sits at the right hand of God.”</blockquote>
+                                <a class="fw-bold text-accent encouragement-author" id="encouragement-author" href="https://billygraham.org/devotions/where-is-your-hope" target="_blank" rel="noopener noreferrer">Billy Graham</a>
                             </div>
+                            <button class="encouragement-next" id="encouragement-next" type="button" hidden>Another quote</button>
                         </div>
                     </div>
                 </div>
@@ -305,24 +305,16 @@
         </section>
     </main>
     <!-- Footer -->
-    <footer class="bg-dark py-4 mt-auto">
-        <div class="container px-5">
-            <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                <div class="col-auto mb-3 mb-sm-0">
-                    <div class="small m-0 text-white">&copy; 2026 NUBS KNUST. All Rights Reserved.</div>
-                </div>
-                <div class="col-auto text-center">
-                    <a class="link-light small" href="about.html">About</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="contact.html">Contact</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="privacy.html">Privacy Policy</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="terms.html">Terms of Use</a>
-                    <span class="text-white mx-1">&middot;</span>
-                    <a class="link-light small" href="cookies.html">Cookie Policy</a>
-                </div>
-            </div>
+    <footer class="site-footer">
+        <div class="site-footer-inner">
+            <p>&copy; 2026 NUBS KNUST. All Rights Reserved.</p>
+            <nav aria-label="Footer navigation">
+                <a href="/about.html">About</a><span aria-hidden="true">&middot;</span>
+                <a href="/contact.html">Contact</a><span aria-hidden="true">&middot;</span>
+                <a href="/privacy.html">Privacy Policy</a><span aria-hidden="true">&middot;</span>
+                <a href="/terms.html">Terms of Use</a><span aria-hidden="true">&middot;</span>
+                <a href="/cookies.html">Cookie Policy</a>
+            </nav>
         </div>
     </footer>
     <!-- Bootstrap core JS-->

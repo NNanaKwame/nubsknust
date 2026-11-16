@@ -1,0 +1,10 @@
+/* Shared footer styling is independent of Bootstrap, including on policy pages. */
+.site-footer { box-sizing: border-box; width: 100%; background: #212529; color: #fff; padding: 24px 0; margin-top: auto; font: 14px/1.6 system-ui, -apple-system, sans-serif; letter-spacing: normal; }
+.site-footer * { box-sizing: border-box; }
+.site-footer-inner { max-width: 1140px; margin: 0 auto; padding: 0 48px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.site-footer p { margin: 0; font-size: 14px; }
+.site-footer nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.site-footer a { color: #f8f9fa; text-decoration: underline; text-underline-offset: 3px; }
+.site-footer a:hover { color: #fff; }
+.site-footer a:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+@media (max-width: 767px) { .site-footer-inner { flex-direction: column; text-align: center; padding: 0 24px; gap: 12px; } }

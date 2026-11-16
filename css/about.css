@@ -1,0 +1,29 @@
+.gathering-time { color: #343b59; font-size: .9rem; font-weight: 700; margin: 0 0 12px; }
+.about-governance { margin-bottom: 32px; }
+.leadership-intro { max-width: 640px; }
+.leadership-anchor {     padding: 24px; margin: 28px 0 20px; }
+.leadership-label { display: block; font-size: .8rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: #7a6fb0; margin-bottom: 8px; }
+.leadership-anchor h3, .leadership-card h3, .affiliation-card h3, .campus-family h3 { font-size: 1.05rem; font-weight: 600; color: #241f35; line-height: 1.4; margin: 0 0 10px; }
+.leadership-anchor p, .affiliation-card p, .campus-family p { color: #6b6579; line-height: 1.7; margin: 0; }
+.leadership-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+.leadership-card {    padding: 24px; }
+.leadership-number { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 13px; font-weight: 700; margin-bottom: 18px; }
+.leadership-caption { font-size: .87rem; line-height: 1.6; color: #6b6579; margin-bottom: 18px; }
+.leadership-card ul { padding-left: 18px; margin: 0; color: #6b6579; font-size: .93rem; line-height: 1.8; }
+.affiliation-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-top: 24px; }
+.affiliation-card { display: block; padding: 24px;      }
+.affiliation-card a:focus-visible, .campus-family a:focus-visible { outline: 3px solid #6873aa; outline-offset: 4px; }
+.campus-family { padding: 28px; margin-top: 24px;   }
+.campus-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px 28px; padding-left: 20px; margin: 20px 0 0; color: #6b6579; line-height: 1.7; }
+.campus-list a { color: #405e53; text-underline-offset: 3px; }
+@media (max-width: 767px) { .leadership-grid, .affiliation-grid, .campus-list { grid-template-columns: 1fr; } .leadership-card, .affiliation-card, .campus-family { padding: 20px; } }
+#leadership-heading, #affiliations-heading { scroll-margin-top: 90px; }
+.leadership-number.badge-indigo { background: #e5e8f7; color: #4b568a; }
+.leadership-number.badge-sage { background: #e0eee4; color: #426650; }
+.leadership-number.badge-gold { background: #f4ecd5; color: #78602e; }
+
+/* Use the page's existing typeface and show links on hover or keyboard focus. */
+.about-governance, .affiliations-section { font-family: inherit; }
+.affiliation-card h3 a, .campus-list a { color: inherit; text-decoration: none; }
+.affiliation-card h3 a:hover, .affiliation-card h3 a:focus-visible,
+.campus-list a:hover, .campus-list a:focus-visible { color: #7a6fb0; text-decoration: underline; text-underline-offset: 4px; }
